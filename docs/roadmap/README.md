@@ -37,6 +37,7 @@ Phase-2 docs each state explicitly which guardrail they lift and what that costs
 ### Phase 2 — Documented now, build later (each lifts a guardrail)
 | # | Feature | Doc | Guardrail lifted |
 |---|---|---|---|
+| 7 | **Auth — signup/login & accounts** (build FIRST; gates the rest) | [`07-auth-accounts.md`](07-auth-accounts.md) | No auth / no accounts |
 | 4 | Bill / voucher photo capture | [`04-bill-photo-capture.md`](04-bill-photo-capture.md) | File uploads |
 | 5 | GST billing + vendor/labour payment ledgers | [`05-gst-billing-ledgers.md`](05-gst-billing-ledgers.md) | Auth/accounts |
 
