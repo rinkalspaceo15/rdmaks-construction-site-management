@@ -156,7 +156,7 @@ function LandingPage() {
             <a href="#who" className="hidden sm:block text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors px-3 py-2">Who It's For</a>
             <a href="#features" className="hidden sm:block text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors px-3 py-2">Features</a>
             <a href="#security" className="hidden sm:block text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors px-3 py-2">Security</a>
-            <Link to="/app" className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white px-5 py-2 rounded-lg font-medium text-sm transition-all shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40">
+            <Link to="/app" className="bg-gray-900 hover:bg-black text-white px-5 py-2 rounded-lg font-medium text-sm transition-all shadow-sm">
               Open App
             </Link>
           </div>
@@ -223,7 +223,7 @@ function LandingPage() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.9 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <Link to="/app" className="group relative bg-gradient-to-r from-amber-500 to-orange-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all shadow-2xl shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-105 flex items-center gap-2">
+            <Link to="/app" className="group relative bg-gray-900 hover:bg-black text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all shadow-lg hover:scale-105 flex items-center gap-2">
               Start Managing Sites
               <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </Link>
@@ -729,7 +729,7 @@ function LandingPage() {
                 Your sites deserve better than WhatsApp groups and Excel sheets.
                 Start tracking — it takes 5 minutes to set up.
               </p>
-              <Link to="/app" className="group inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white px-10 py-4 rounded-xl font-semibold text-lg transition-all shadow-2xl shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-105">
+              <Link to="/app" className="group inline-flex items-center gap-2 bg-gray-900 hover:bg-black text-white px-10 py-4 rounded-xl font-semibold text-lg transition-all shadow-lg hover:scale-105">
                 Open SiteManager Free
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </Link>
