@@ -97,7 +97,7 @@ function FadeIn({ children, delay = 0, direction = 'up' }: {
 }
 
 function SectionTag({ text }: { text: string }) {
-  return <span className="text-amber-500 text-sm font-semibold tracking-wider uppercase mb-4 block">{text}</span>;
+  return <span className="text-amber-600 text-sm font-semibold tracking-wider uppercase mb-4 block">{text}</span>;
 }
 
 /* ─── Data ─── */
@@ -136,14 +136,14 @@ function LandingPage() {
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white overflow-hidden">
+    <div className="min-h-screen bg-amber-50 text-gray-900 overflow-hidden">
 
       {/* ────── Nav ────── */}
       <motion.nav
         initial={{ y: -80 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 bg-gray-950/80 backdrop-blur-xl border-b border-white/5"
+        className="fixed top-0 left-0 right-0 z-50 bg-amber-50/80 backdrop-blur-xl border-b border-gray-200"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
@@ -153,9 +153,9 @@ function LandingPage() {
             <span className="text-lg font-bold tracking-tight">SiteManager</span>
           </div>
           <div className="flex items-center gap-3">
-            <a href="#who" className="hidden sm:block text-gray-400 hover:text-white text-sm font-medium transition-colors px-3 py-2">Who It's For</a>
-            <a href="#features" className="hidden sm:block text-gray-400 hover:text-white text-sm font-medium transition-colors px-3 py-2">Features</a>
-            <a href="#security" className="hidden sm:block text-gray-400 hover:text-white text-sm font-medium transition-colors px-3 py-2">Security</a>
+            <a href="#who" className="hidden sm:block text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors px-3 py-2">Who It's For</a>
+            <a href="#features" className="hidden sm:block text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors px-3 py-2">Features</a>
+            <a href="#security" className="hidden sm:block text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors px-3 py-2">Security</a>
             <Link to="/app" className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white px-5 py-2 rounded-lg font-medium text-sm transition-all shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40">
               Open App
             </Link>
@@ -170,16 +170,16 @@ function LandingPage() {
         className="relative min-h-screen flex items-center justify-center pt-20"
       >
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-orange-600/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-          <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-yellow-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-300/40 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-orange-300/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+          <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-yellow-300/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
         </div>
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
+        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'linear-gradient(rgba(0,0,0,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.5) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
 
         {FLOATING_ICONS.map(({ Icon, x, y, size, delay }, i) => (
           <motion.div
             key={i}
-            className="absolute text-amber-500/20 hidden md:block"
+            className="absolute text-amber-400/40 hidden md:block"
             style={{ left: x, top: y }}
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1, y: [0, -15, 0] }}
@@ -195,7 +195,7 @@ function LandingPage() {
 
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 text-amber-400 px-4 py-1.5 rounded-full text-sm font-medium mb-8"
+            className="inline-flex items-center gap-2 bg-amber-100 border border-amber-200 text-amber-700 px-4 py-1.5 rounded-full text-sm font-medium mb-8"
           >
             <Zap size={14} className="animate-pulse" />
             Built for Indian Contractors & Builders
@@ -204,19 +204,19 @@ function LandingPage() {
           <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.4 }}
             className="text-4xl sm:text-5xl md:text-7xl font-extrabold leading-[1.1] mb-6 tracking-tight"
           >
-            Ditch the{' '}
+            Your whole site, logged in{' '}
             <span className="relative inline-block">
-              <span className="relative z-10 bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500 bg-clip-text text-transparent">WhatsApp Chaos</span>
+              <span className="relative z-10 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 bg-clip-text text-transparent">5 minutes a day</span>
               <motion.span className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-orange-600 rounded-full" initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.8, delay: 1.2 }} style={{ originX: 0 }} />
             </span>
             <br />
-            <span className="text-gray-400 text-3xl sm:text-4xl md:text-5xl font-semibold">Run Your Sites Like a Pro</span>
+            <span className="text-gray-600 text-3xl sm:text-4xl md:text-5xl font-semibold">Ditch the WhatsApp chaos. Run your sites like a pro.</span>
           </motion.h1>
 
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.7 }}
-            className="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-gray-600 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            Attendance, materials, expenses, daily reports — all your site data in one secure app.
+            Attendance, materials, expenses, daily reports — from your phone, between tasks.
             Works on any phone. Built for real Indian construction workflows.
           </motion.p>
 
@@ -227,27 +227,27 @@ function LandingPage() {
               Start Managing Sites
               <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </Link>
-            <a href="#who" className="text-gray-400 hover:text-white px-6 py-4 rounded-xl font-medium border border-gray-800 hover:border-gray-600 transition-all hover:bg-white/5">
+            <a href="#who" className="text-gray-700 hover:text-gray-900 px-6 py-4 rounded-xl font-medium border border-gray-300 hover:border-gray-400 transition-all hover:bg-amber-100/50">
               See Who It's For
             </a>
           </motion.div>
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }} className="absolute bottom-8 left-1/2 -translate-x-1/2">
             <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
-              <ChevronDown size={24} className="text-gray-600" />
+              <ChevronDown size={24} className="text-gray-400" />
             </motion.div>
           </motion.div>
         </div>
       </motion.section>
 
       {/* ────── Trust Bar ────── */}
-      <section className="relative z-10 border-y border-white/5 bg-gray-900/50 backdrop-blur-sm">
+      <section className="relative z-10 border-y border-gray-200 bg-white/60 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {STATS.map((stat, i) => (
               <FadeIn key={stat.label} delay={i * 0.1}>
                 <div className="text-center">
-                  <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent mb-1">
+                  <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent mb-1">
                     <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                   </div>
                   <div className="text-gray-500 text-sm font-medium">{stat.label}</div>
@@ -265,7 +265,7 @@ function LandingPage() {
             <div className="text-center mb-16">
               <SectionTag text="Who It's For" />
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">Two Roles. One App.</h2>
-              <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              <p className="text-gray-600 text-lg max-w-2xl mx-auto">
                 Whether you're the person on-site or the one reviewing across all sites — SiteManager fits how you already work.
               </p>
             </div>
@@ -274,8 +274,8 @@ function LandingPage() {
           <div className="grid md:grid-cols-2 gap-6">
             {/* Supervisor */}
             <FadeIn delay={0.1} direction="right">
-              <motion.div whileHover={{ y: -4 }} className="bg-gray-900/50 border border-white/5 rounded-2xl p-8 hover:border-amber-500/20 transition-colors relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-40 h-40 bg-amber-500/5 rounded-full blur-3xl group-hover:bg-amber-500/10 transition-colors" />
+              <motion.div whileHover={{ y: -4 }} className="bg-white border border-gray-200 shadow-sm rounded-2xl p-8 hover:border-amber-300 transition-colors relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-40 h-40 bg-amber-200/40 rounded-full blur-3xl group-hover:bg-amber-200/60 transition-colors" />
                 <div className="relative z-10">
                   <div className="flex items-center gap-4 mb-6">
                     <div className="bg-gradient-to-br from-amber-500 to-orange-600 w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-lg">
@@ -283,12 +283,12 @@ function LandingPage() {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold">Site Supervisor / Foreman</h3>
-                      <p className="text-amber-500/80 text-sm">On-site daily</p>
+                      <p className="text-amber-600 text-sm">On-site daily</p>
                     </div>
                   </div>
-                  <p className="text-gray-400 text-sm mb-5 leading-relaxed">
+                  <p className="text-gray-600 text-sm mb-5 leading-relaxed">
                     You're on the ground every morning. Workers show up, materials arrive, expenses happen.
-                    You need to record everything <strong className="text-gray-300">fast</strong> — before the next truck pulls in.
+                    You need to record everything <strong className="text-gray-800">fast</strong> — before the next truck pulls in.
                   </p>
                   <div className="space-y-3">
                     {[
@@ -298,12 +298,12 @@ function LandingPage() {
                       { icon: <FileText size={16} />, task: 'Write end-of-day report — weather, work done, issues' },
                     ].map((item) => (
                       <div key={item.task} className="flex items-start gap-3">
-                        <div className="bg-amber-500/10 p-1.5 rounded-md text-amber-500 mt-0.5 shrink-0">{item.icon}</div>
-                        <span className="text-gray-300 text-sm">{item.task}</span>
+                        <div className="bg-amber-100 p-1.5 rounded-md text-amber-600 mt-0.5 shrink-0">{item.icon}</div>
+                        <span className="text-gray-700 text-sm">{item.task}</span>
                       </div>
                     ))}
                   </div>
-                  <div className="mt-6 pt-5 border-t border-white/5">
+                  <div className="mt-6 pt-5 border-t border-gray-200">
                     <div className="flex items-center gap-2 text-gray-500 text-xs">
                       <Smartphone size={14} />
                       Works on any phone browser — no app install needed
@@ -315,8 +315,8 @@ function LandingPage() {
 
             {/* Contractor */}
             <FadeIn delay={0.2} direction="left">
-              <motion.div whileHover={{ y: -4 }} className="bg-gray-900/50 border border-white/5 rounded-2xl p-8 hover:border-blue-500/20 transition-colors relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-40 h-40 bg-blue-500/5 rounded-full blur-3xl group-hover:bg-blue-500/10 transition-colors" />
+              <motion.div whileHover={{ y: -4 }} className="bg-white border border-gray-200 shadow-sm rounded-2xl p-8 hover:border-blue-300 transition-colors relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-40 h-40 bg-blue-200/40 rounded-full blur-3xl group-hover:bg-blue-200/60 transition-colors" />
                 <div className="relative z-10">
                   <div className="flex items-center gap-4 mb-6">
                     <div className="bg-gradient-to-br from-blue-500 to-cyan-600 w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-lg">
@@ -324,12 +324,12 @@ function LandingPage() {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold">Contractor / Builder</h3>
-                      <p className="text-blue-400/80 text-sm">Managing 3–10 sites</p>
+                      <p className="text-blue-600 text-sm">Managing 3–10 sites</p>
                     </div>
                   </div>
-                  <p className="text-gray-400 text-sm mb-5 leading-relaxed">
+                  <p className="text-gray-600 text-sm mb-5 leading-relaxed">
                     You're running the business. Multiple sites, multiple supervisors, money flowing everywhere.
-                    You need the <strong className="text-gray-300">big picture</strong> — without calling 5 people.
+                    You need the <strong className="text-gray-800">big picture</strong> — without calling 5 people.
                   </p>
                   <div className="space-y-3">
                     {[
@@ -339,12 +339,12 @@ function LandingPage() {
                       { icon: <ClipboardList size={16} />, task: 'Read daily reports from each site without calling anyone' },
                     ].map((item) => (
                       <div key={item.task} className="flex items-start gap-3">
-                        <div className="bg-blue-500/10 p-1.5 rounded-md text-blue-400 mt-0.5 shrink-0">{item.icon}</div>
-                        <span className="text-gray-300 text-sm">{item.task}</span>
+                        <div className="bg-blue-100 p-1.5 rounded-md text-blue-600 mt-0.5 shrink-0">{item.icon}</div>
+                        <span className="text-gray-700 text-sm">{item.task}</span>
                       </div>
                     ))}
                   </div>
-                  <div className="mt-6 pt-5 border-t border-white/5">
+                  <div className="mt-6 pt-5 border-t border-gray-200">
                     <div className="flex items-center gap-2 text-gray-500 text-xs">
                       <Eye size={14} />
                       Full visibility without being physically on-site
@@ -359,23 +359,23 @@ function LandingPage() {
 
       {/* ────── Before vs After ────── */}
       <section className="py-20 sm:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-500/3 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-100/30 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <FadeIn>
             <div className="text-center mb-16">
               <SectionTag text="Before vs After" />
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">Your Current Workflow is Broken</h2>
-              <p className="text-gray-400 text-lg">Here's what changes when you switch.</p>
+              <p className="text-gray-600 text-lg">Here's what changes when you switch.</p>
             </div>
           </FadeIn>
 
           <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
             {/* Before */}
             <FadeIn delay={0.1} direction="right">
-              <div className="bg-red-500/5 border border-red-500/10 rounded-2xl p-6">
+              <div className="bg-red-50 border border-red-200 rounded-2xl p-6">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="bg-red-500/10 p-2 rounded-lg"><XCircle size={20} className="text-red-400" /></div>
-                  <h3 className="text-lg font-bold text-red-400">Before — WhatsApp + Excel</h3>
+                  <div className="bg-red-100 p-2 rounded-lg"><XCircle size={20} className="text-red-600" /></div>
+                  <h3 className="text-lg font-bold text-red-600">Before — WhatsApp + Excel</h3>
                 </div>
                 <div className="space-y-3">
                   {[
@@ -386,8 +386,8 @@ function LandingPage() {
                     { icon: <AlertTriangle size={16} />, text: 'End of month: fight to reconstruct what happened' },
                     { icon: <Clock size={16} />, text: '30+ min/day wasted chasing info across apps' },
                   ].map((item) => (
-                    <motion.div key={item.text} whileHover={{ x: 3 }} className="flex items-start gap-3 text-sm text-gray-400 cursor-default">
-                      <span className="text-red-400/60 mt-0.5 shrink-0">{item.icon}</span>
+                    <motion.div key={item.text} whileHover={{ x: 3 }} className="flex items-start gap-3 text-sm text-gray-600 cursor-default">
+                      <span className="text-red-500 mt-0.5 shrink-0">{item.icon}</span>
                       {item.text}
                     </motion.div>
                   ))}
@@ -397,10 +397,10 @@ function LandingPage() {
 
             {/* After */}
             <FadeIn delay={0.2} direction="left">
-              <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-2xl p-6">
+              <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-6">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="bg-emerald-500/10 p-2 rounded-lg"><CheckCircle size={20} className="text-emerald-400" /></div>
-                  <h3 className="text-lg font-bold text-emerald-400">After — SiteManager</h3>
+                  <div className="bg-emerald-100 p-2 rounded-lg"><CheckCircle size={20} className="text-emerald-600" /></div>
+                  <h3 className="text-lg font-bold text-emerald-600">After — SiteManager</h3>
                 </div>
                 <div className="space-y-3">
                   {[
@@ -411,8 +411,8 @@ function LandingPage() {
                     { icon: <CheckCircle size={16} />, text: 'Month-end? Open dashboard. Everything is already there.' },
                     { icon: <Zap size={16} />, text: '5 min/day — log everything from your phone between tasks' },
                   ].map((item) => (
-                    <motion.div key={item.text} whileHover={{ x: 3 }} className="flex items-start gap-3 text-sm text-gray-300 cursor-default">
-                      <span className="text-emerald-400/60 mt-0.5 shrink-0">{item.icon}</span>
+                    <motion.div key={item.text} whileHover={{ x: 3 }} className="flex items-start gap-3 text-sm text-gray-700 cursor-default">
+                      <span className="text-emerald-500 mt-0.5 shrink-0">{item.icon}</span>
                       {item.text}
                     </motion.div>
                   ))}
@@ -425,13 +425,13 @@ function LandingPage() {
 
       {/* ────── Features ────── */}
       <section id="features" className="py-20 sm:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-500/5 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-100/40 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <FadeIn>
             <div className="text-center mb-16">
               <SectionTag text="Features" />
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">Six Tools. One App. Zero Guesswork.</h2>
-              <p className="text-gray-400 text-lg max-w-2xl mx-auto">Each feature maps to a real task you already do on-site — just faster, organized, and permanent.</p>
+              <p className="text-gray-600 text-lg max-w-2xl mx-auto">Each feature maps to a real task you already do on-site — just faster, organized, and permanent.</p>
             </div>
           </FadeIn>
 
@@ -441,15 +441,15 @@ function LandingPage() {
                 <motion.div
                   whileHover={{ y: -6, scale: 1.02 }}
                   transition={{ type: 'spring', stiffness: 300 }}
-                  className="relative group bg-gray-900/50 border border-white/5 rounded-2xl p-6 hover:border-amber-500/20 transition-colors overflow-hidden h-full"
+                  className="relative group bg-white border border-gray-200 shadow-sm rounded-2xl p-6 hover:border-amber-300 transition-colors overflow-hidden h-full"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-amber-100/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="relative z-10">
                     <div className={`bg-gradient-to-br ${f.gradient} w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-white shadow-lg`}>
                       {f.icon}
                     </div>
                     <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
-                    <p className="text-gray-400 text-sm leading-relaxed">{f.desc}</p>
+                    <p className="text-gray-600 text-sm leading-relaxed">{f.desc}</p>
                   </div>
                 </motion.div>
               </FadeIn>
@@ -465,7 +465,7 @@ function LandingPage() {
             <div className="text-center mb-16">
               <SectionTag text="How It Works" />
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">Setup in 10 Minutes. Use Daily.</h2>
-              <p className="text-gray-400 text-lg">No training manual. No onboarding call. Just open and start.</p>
+              <p className="text-gray-600 text-lg">No training manual. No onboarding call. Just open and start.</p>
             </div>
           </FadeIn>
 
@@ -478,14 +478,14 @@ function LandingPage() {
             ].map((s, i) => (
               <FadeIn key={s.step} delay={i * 0.15}>
                 <div className="relative">
-                  {i < 3 && <div className="hidden md:block absolute top-10 left-full w-full h-px bg-gradient-to-r from-amber-500/40 to-transparent z-0" />}
-                  <motion.div whileHover={{ y: -4 }} className="relative z-10 bg-gray-900/50 border border-white/5 rounded-2xl p-6 hover:border-amber-500/20 transition-colors h-full">
+                  {i < 3 && <div className="hidden md:block absolute top-10 left-full w-full h-px bg-gradient-to-r from-amber-300 to-transparent z-0" />}
+                  <motion.div whileHover={{ y: -4 }} className="relative z-10 bg-white border border-gray-200 shadow-sm rounded-2xl p-6 hover:border-amber-300 transition-colors h-full">
                     <div className="flex items-center gap-3 mb-4">
-                      <span className="text-amber-500/30 text-3xl font-black">{s.step}</span>
-                      <div className="bg-amber-500/10 p-2 rounded-lg text-amber-500">{s.icon}</div>
+                      <span className="text-amber-300 text-3xl font-black">{s.step}</span>
+                      <div className="bg-amber-100 p-2 rounded-lg text-amber-600">{s.icon}</div>
                     </div>
                     <h3 className="text-lg font-semibold mb-2">{s.title}</h3>
-                    <p className="text-gray-400 text-sm leading-relaxed">{s.desc}</p>
+                    <p className="text-gray-600 text-sm leading-relaxed">{s.desc}</p>
                   </motion.div>
                 </div>
               </FadeIn>
@@ -496,13 +496,13 @@ function LandingPage() {
 
       {/* ────── Security & Trust ────── */}
       <section id="security" className="py-20 sm:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-500/3 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-100/30 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <FadeIn>
             <div className="text-center mb-16">
               <SectionTag text="Security & Trust" />
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">Your Site Data. Protected.</h2>
-              <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              <p className="text-gray-600 text-lg max-w-2xl mx-auto">
                 Unlike WhatsApp where anyone in the group sees everything — SiteManager keeps your business data organized, private, and safe.
               </p>
             </div>
@@ -550,13 +550,13 @@ function LandingPage() {
               <FadeIn key={item.title} delay={i * 0.08}>
                 <motion.div
                   whileHover={{ y: -6 }}
-                  className="bg-gray-900/50 border border-white/5 rounded-2xl p-6 hover:border-emerald-500/15 transition-colors group"
+                  className="bg-white border border-gray-200 shadow-sm rounded-2xl p-6 hover:border-emerald-300 transition-colors group"
                 >
                   <div className={`bg-gradient-to-br ${item.gradient} w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-white shadow-lg`}>
                     {item.icon}
                   </div>
                   <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
+                  <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
                 </motion.div>
               </FadeIn>
             ))}
@@ -566,7 +566,7 @@ function LandingPage() {
 
       {/* ────── App Preview Mock ────── */}
       <section className="py-20 sm:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-500/5 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-100/40 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <FadeIn>
             <div className="text-center mb-12">
@@ -576,32 +576,32 @@ function LandingPage() {
           </FadeIn>
 
           <FadeIn delay={0.2}>
-            <motion.div whileHover={{ scale: 1.01 }} className="relative bg-gray-900 border border-white/10 rounded-2xl overflow-hidden shadow-2xl shadow-black/50 max-w-4xl mx-auto">
-              <div className="flex items-center gap-2 px-4 py-3 bg-gray-800/50 border-b border-white/5">
+            <motion.div whileHover={{ scale: 1.01 }} className="relative bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2xl shadow-gray-300/50 max-w-4xl mx-auto">
+              <div className="flex items-center gap-2 px-4 py-3 bg-gray-100 border-b border-gray-200">
                 <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-red-500/70" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
-                  <div className="w-3 h-3 rounded-full bg-green-500/70" />
+                  <div className="w-3 h-3 rounded-full bg-red-400" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-400" />
+                  <div className="w-3 h-3 rounded-full bg-green-400" />
                 </div>
                 <div className="flex-1 mx-4">
-                  <div className="bg-gray-700/50 rounded-md px-3 py-1 text-gray-400 text-xs text-center flex items-center justify-center gap-1.5">
+                  <div className="bg-gray-200 rounded-md px-3 py-1 text-gray-500 text-xs text-center flex items-center justify-center gap-1.5">
                     <Lock size={10} /> sitemanager.app/app
                   </div>
                 </div>
               </div>
 
               <div className="p-6 flex gap-4">
-                <div className="hidden sm:flex flex-col w-16 bg-gray-800/50 rounded-xl p-2 gap-3 items-center">
-                  <div className="bg-amber-500/20 p-2 rounded-lg"><HardHat size={16} className="text-amber-500" /></div>
-                  <div className="bg-white/5 p-2 rounded-lg"><BarChart3 size={16} className="text-gray-500" /></div>
-                  <div className="bg-white/5 p-2 rounded-lg"><Building2 size={16} className="text-gray-500" /></div>
-                  <div className="bg-white/5 p-2 rounded-lg"><Users size={16} className="text-gray-500" /></div>
+                <div className="hidden sm:flex flex-col w-16 bg-gray-100 rounded-xl p-2 gap-3 items-center">
+                  <div className="bg-amber-100 p-2 rounded-lg"><HardHat size={16} className="text-amber-600" /></div>
+                  <div className="bg-gray-200/60 p-2 rounded-lg"><BarChart3 size={16} className="text-gray-400" /></div>
+                  <div className="bg-gray-200/60 p-2 rounded-lg"><Building2 size={16} className="text-gray-400" /></div>
+                  <div className="bg-gray-200/60 p-2 rounded-lg"><Users size={16} className="text-gray-400" /></div>
                 </div>
 
                 <div className="flex-1 space-y-4">
                   <div className="flex items-center justify-between">
-                    <div className="bg-gray-800/50 rounded-lg h-6 w-32" />
-                    <div className="bg-amber-500/20 rounded-lg h-6 w-20" />
+                    <div className="bg-gray-200 rounded-lg h-6 w-32" />
+                    <div className="bg-amber-200 rounded-lg h-6 w-20" />
                   </div>
 
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -612,9 +612,9 @@ function LandingPage() {
                       { label: 'On Hold', val: '2' },
                     ].map((s) => (
                       <motion.div key={s.label} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
-                        className="bg-gray-800/30 border border-white/5 rounded-xl p-3"
+                        className="bg-gray-50 border border-gray-200 rounded-xl p-3"
                       >
-                        <div className="text-xl font-bold text-white">{s.val}</div>
+                        <div className="text-xl font-bold text-gray-900">{s.val}</div>
                         <div className="text-gray-500 text-xs">{s.label}</div>
                       </motion.div>
                     ))}
@@ -622,12 +622,12 @@ function LandingPage() {
 
                   <div className="space-y-2">
                     {[
-                      { name: 'Sunrise Apartments, Andheri', status: 'Active', cls: 'bg-green-500/10 text-green-400' },
-                      { name: 'Green Valley Phase 2, Thane', status: 'Active', cls: 'bg-green-500/10 text-green-400' },
-                      { name: 'Highway Overpass, NH-48', status: 'On Hold', cls: 'bg-yellow-500/10 text-yellow-400' },
+                      { name: 'Sunrise Apartments, Andheri', status: 'Active', cls: 'bg-green-100 text-green-700' },
+                      { name: 'Green Valley Phase 2, Thane', status: 'Active', cls: 'bg-green-100 text-green-700' },
+                      { name: 'Highway Overpass, NH-48', status: 'On Hold', cls: 'bg-yellow-100 text-yellow-700' },
                     ].map((row) => (
-                      <div key={row.name} className="flex items-center justify-between bg-gray-800/30 border border-white/5 rounded-lg px-4 py-2.5">
-                        <span className="text-sm text-gray-300">{row.name}</span>
+                      <div key={row.name} className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5">
+                        <span className="text-sm text-gray-700">{row.name}</span>
                         <span className={`text-xs px-2 py-0.5 rounded-full ${row.cls}`}>{row.status}</span>
                       </div>
                     ))}
@@ -646,7 +646,7 @@ function LandingPage() {
             <div className="text-center mb-12">
               <SectionTag text="A Day on Site" />
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">5 Minutes a Day. Everything Logged.</h2>
-              <p className="text-gray-400 text-lg">A real supervisor's workflow — from morning roll call to evening report.</p>
+              <p className="text-gray-600 text-lg">A real supervisor's workflow — from morning roll call to evening report.</p>
             </div>
           </FadeIn>
 
@@ -661,14 +661,14 @@ function LandingPage() {
             ].map((item, i) => (
               <FadeIn key={item.time} delay={i * 0.08}>
                 <motion.div whileHover={{ x: 6 }}
-                  className="flex items-center gap-4 bg-gray-900/50 border border-white/5 rounded-xl p-4 hover:border-amber-500/20 transition-colors group cursor-default"
+                  className="flex items-center gap-4 bg-white border border-gray-200 shadow-sm rounded-xl p-4 hover:border-amber-300 transition-colors group cursor-default"
                 >
-                  <span className="text-amber-500/60 text-xs font-mono w-16 shrink-0">{item.time}</span>
-                  <div className="bg-amber-500/10 p-2 rounded-lg text-amber-500 group-hover:bg-amber-500/20 transition-colors shrink-0">
+                  <span className="text-amber-600 text-xs font-mono w-16 shrink-0">{item.time}</span>
+                  <div className="bg-amber-100 p-2 rounded-lg text-amber-600 group-hover:bg-amber-200 transition-colors shrink-0">
                     {item.icon}
                   </div>
                   <div className="min-w-0">
-                    <div className="text-white font-medium text-sm">{item.action}</div>
+                    <div className="text-gray-900 font-medium text-sm">{item.action}</div>
                     <div className="text-gray-500 text-xs">{item.detail}</div>
                   </div>
                 </motion.div>
@@ -680,13 +680,13 @@ function LandingPage() {
 
       {/* ────── Built for India ────── */}
       <section className="py-20 sm:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-500/5 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-100/40 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <FadeIn>
             <div className="text-center mb-16">
               <SectionTag text="Made for India" />
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">Built for the Indian Construction Market</h2>
-              <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              <p className="text-gray-600 text-lg max-w-2xl mx-auto">
                 Not a foreign tool with a Rupee symbol slapped on. Designed from the ground up for how Indian sites actually run.
               </p>
             </div>
@@ -700,12 +700,12 @@ function LandingPage() {
               { icon: <Zap size={24} />, title: 'Zero Learning Curve', desc: 'Plain English labels. No jargon. If your supervisor uses WhatsApp, they can use this.', gradient: 'from-violet-500 to-purple-600' },
             ].map((item, i) => (
               <FadeIn key={item.title} delay={i * 0.1}>
-                <motion.div whileHover={{ y: -6 }} className="text-center p-6 rounded-2xl bg-gray-900/50 border border-white/5 hover:border-amber-500/20 transition-colors">
+                <motion.div whileHover={{ y: -6 }} className="text-center p-6 rounded-2xl bg-white border border-gray-200 shadow-sm hover:border-amber-300 transition-colors">
                   <div className={`bg-gradient-to-br ${item.gradient} w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 text-white shadow-lg`}>
                     {item.icon}
                   </div>
                   <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
+                  <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
                 </motion.div>
               </FadeIn>
             ))}
@@ -716,16 +716,16 @@ function LandingPage() {
       {/* ────── CTA ────── */}
       <section className="py-24 sm:py-32 relative">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-200/50 rounded-full blur-3xl" />
         </div>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center relative z-10">
           <FadeIn>
-            <motion.div whileHover={{ scale: 1.01 }} className="bg-gradient-to-br from-gray-900 to-gray-800 border border-amber-500/20 rounded-3xl p-10 sm:p-14 shadow-2xl shadow-amber-500/10">
+            <motion.div whileHover={{ scale: 1.01 }} className="bg-gradient-to-br from-white to-amber-50 border border-amber-200 rounded-3xl p-10 sm:p-14 shadow-2xl shadow-amber-200/40">
               <div className="bg-gradient-to-br from-amber-400 to-orange-600 p-3 rounded-2xl w-fit mx-auto mb-6">
                 <HardHat size={32} className="text-white" />
               </div>
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">Ready to Build Smarter?</h2>
-              <p className="text-gray-400 text-lg mb-8 max-w-lg mx-auto">
+              <p className="text-gray-600 text-lg mb-8 max-w-lg mx-auto">
                 Your sites deserve better than WhatsApp groups and Excel sheets.
                 Start tracking — it takes 5 minutes to set up.
               </p>
@@ -744,7 +744,7 @@ function LandingPage() {
       </section>
 
       {/* ────── Footer ────── */}
-      <footer className="border-t border-white/5 py-8">
+      <footer className="border-t border-gray-200 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
             <div className="bg-gradient-to-br from-amber-400 to-orange-600 p-1 rounded-md">
@@ -752,13 +752,13 @@ function LandingPage() {
             </div>
             <span className="font-semibold">SiteManager</span>
           </div>
-          <div className="flex items-center gap-6 text-gray-500 text-sm">
-            <a href="#who" className="hover:text-white transition-colors">Who It's For</a>
-            <a href="#features" className="hover:text-white transition-colors">Features</a>
-            <a href="#security" className="hover:text-white transition-colors">Security</a>
-            <Link to="/app" className="hover:text-white transition-colors">Open App</Link>
+          <div className="flex items-center gap-6 text-gray-600 text-sm">
+            <a href="#who" className="hover:text-gray-900 transition-colors">Who It's For</a>
+            <a href="#features" className="hover:text-gray-900 transition-colors">Features</a>
+            <a href="#security" className="hover:text-gray-900 transition-colors">Security</a>
+            <Link to="/app" className="hover:text-gray-900 transition-colors">Open App</Link>
           </div>
-          <p className="text-gray-600 text-sm">Built for Indian builders & contractors.</p>
+          <p className="text-gray-500 text-sm">Built for Indian builders & contractors.</p>
         </div>
       </footer>
     </div>
