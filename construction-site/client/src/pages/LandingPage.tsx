@@ -136,14 +136,14 @@ function LandingPage() {
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
 
   return (
-    <div className="min-h-screen bg-amber-50 text-gray-900 overflow-hidden">
+    <div className="min-h-screen bg-gray-50 text-gray-900 overflow-hidden">
 
       {/* ────── Nav ────── */}
       <motion.nav
         initial={{ y: -80 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 bg-amber-50/80 backdrop-blur-xl border-b border-gray-200"
+        className="fixed top-0 left-0 right-0 z-50 bg-gray-50/80 backdrop-blur-xl border-b border-gray-200"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
@@ -170,9 +170,9 @@ function LandingPage() {
         className="relative min-h-screen flex items-center justify-center pt-20"
       >
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-300/40 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-orange-300/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-          <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-yellow-300/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-200/30 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-orange-200/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+          <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-amber-200/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
         </div>
         <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'linear-gradient(rgba(0,0,0,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.5) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
 
@@ -425,7 +425,7 @@ function LandingPage() {
 
       {/* ────── Features ────── */}
       <section id="features" className="py-20 sm:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-100/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-100/20 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <FadeIn>
             <div className="text-center mb-16">
@@ -566,7 +566,7 @@ function LandingPage() {
 
       {/* ────── App Preview Mock ────── */}
       <section className="py-20 sm:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-100/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-100/20 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <FadeIn>
             <div className="text-center mb-12">
@@ -680,7 +680,7 @@ function LandingPage() {
 
       {/* ────── Built for India ────── */}
       <section className="py-20 sm:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-100/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-100/20 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <FadeIn>
             <div className="text-center mb-16">
@@ -716,7 +716,7 @@ function LandingPage() {
       {/* ────── CTA ────── */}
       <section className="py-24 sm:py-32 relative">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-200/50 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-200/30 rounded-full blur-3xl" />
         </div>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center relative z-10">
           <FadeIn>
