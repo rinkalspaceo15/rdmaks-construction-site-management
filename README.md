@@ -28,17 +28,17 @@ feature/<name>  →  development  →  QA  →  staging  →  main
 - **Never commit directly to `main`, `staging`, `QA`, or `development`.** Open a PR.
 - **Feature branches branch off `development`** and merge back into `development` via PR.
 - **Promotion is one step at a time:** `development → QA → staging → main`. Don't skip levels.
-- **Naming:** `feature/<short-kebab-name>` (e.g. `feature/phase1-client`, `feature/payroll-api`). Use `fix/<name>` for bug fixes, `chore/<name>` for tooling/docs.
+- **Naming:** `feature/<short-kebab-name>` (e.g. `feature/phase1`, `feature/payroll`). Use `fix/<name>` for bug fixes, `chore/<name>` for tooling/docs.
+- **One branch per feature covers the whole `construction-site/`** (client + server together). The client/server split is an internal folder structure, **not** a branch split — commit and promote the app as one unit.
 - **One clean commit per logical change**, message format `type(scope): what changed` (e.g. `feat(payroll): add wage computation route`).
 - Hotfixes to production branch off `main` as `fix/<name>`, then merge to `main` **and** back down to `development`.
 
-### Current feature branches (Phase 1)
-Per the roadmap (`docs/roadmap/`), Phase 1 is split by package:
+### Current feature branch (Phase 1)
+The whole `construction-site/` (client + server together) is managed on **one** feature branch:
 
 | Branch | Scope | Roadmap docs |
 |---|---|---|
-| `feature/phase1-client` | Landing redesign, vernacular i18n, payroll UI | 01, 03, (02 client) |
-| `feature/phase1-server` | Payroll API (model + route) | 02 (server) |
+| `feature/phase1` | Landing redesign, payroll (API + UI), vernacular i18n — full construction-site | 01, 02, 03 |
 
 ---
 
