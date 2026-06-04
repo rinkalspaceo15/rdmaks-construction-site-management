@@ -118,13 +118,14 @@ const FEATURES = [
   { icon: <DollarSign size={28} />, title: 'Expense Tracking', desc: 'Categorize every rupee — material, labor, transport, misc. Filter by category. See totals instantly.', gradient: 'from-violet-500 to-purple-600' },
   { icon: <FileText size={28} />, title: 'Daily Reports', desc: 'End-of-day log: weather, work done, issues faced. Your digital site diary — searchable, never lost.', gradient: 'from-rose-500 to-pink-600' },
   { icon: <BarChart3 size={28} />, title: 'Dashboard Overview', desc: 'One screen: total sites, active workers, on-hold projects. The "how are my sites doing?" answer.', gradient: 'from-amber-500 to-yellow-500' },
+  { icon: <IndianRupee size={28} />, title: 'Payroll', desc: 'Wages calculated automatically from attendance — present, half-day and overtime, totalled per worker in ₹. No more Excel wage sheets.', gradient: 'from-emerald-500 to-green-600' },
 ];
 
 const STATS = [
-  { value: 500, suffix: '+', label: 'Sites Managed' },
-  { value: 10000, suffix: '+', label: 'Workers Tracked' },
-  { value: 50, suffix: ' Lakhs+', label: 'Expenses Logged' },
-  { value: 99, suffix: '%', label: 'Uptime' },
+  { value: 7, suffix: '', label: 'Tools in one app' },
+  { value: 5, suffix: ' min', label: 'A day to stay on top' },
+  { value: 100, suffix: '%', label: 'Your data, your server' },
+  { value: 0, suffix: '', label: '₹ to start — free' },
 ];
 
 /* ─── Page ─── */
@@ -155,7 +156,8 @@ function LandingPage() {
           <div className="flex items-center gap-3">
             <a href="#who" className="hidden sm:block text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors px-3 py-2">Who It's For</a>
             <a href="#features" className="hidden sm:block text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors px-3 py-2">Features</a>
-            <a href="#security" className="hidden sm:block text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors px-3 py-2">Security</a>
+            <a href="#pricing" className="hidden sm:block text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors px-3 py-2">Pricing</a>
+            <a href="#faq" className="hidden md:block text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors px-3 py-2">FAQ</a>
             <Link to="/app" className="bg-gray-900 hover:bg-black text-white px-5 py-2 rounded-lg font-medium text-sm transition-all shadow-sm">
               Open App
             </Link>
@@ -216,8 +218,8 @@ function LandingPage() {
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.7 }}
             className="text-gray-600 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            Attendance, materials, expenses, daily reports — from your phone, between tasks.
-            Works on any phone. Built for real Indian construction workflows.
+            Attendance, materials, expenses, payroll and daily reports — from your phone.
+            Wages auto-calculated, money in ₹ Indian format, and your data stays on your own server.
           </motion.p>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.9 }}
@@ -430,7 +432,7 @@ function LandingPage() {
           <FadeIn>
             <div className="text-center mb-16">
               <SectionTag text="Features" />
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4">Six Tools. One App. Zero Guesswork.</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4">Seven Tools. One App. Zero Guesswork.</h2>
               <p className="text-gray-600 text-lg max-w-2xl mx-auto">Each feature maps to a real task you already do on-site — just faster, organized, and permanent.</p>
             </div>
           </FadeIn>
@@ -503,7 +505,7 @@ function LandingPage() {
               <SectionTag text="Security & Trust" />
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">Your Site Data. Protected.</h2>
               <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-                Unlike WhatsApp where anyone in the group sees everything — SiteManager keeps your business data organized, private, and safe.
+                Your site's money, attendance and reports stay organized, private, and under your control — not scattered across chat messages and spreadsheets.
               </p>
             </div>
           </FadeIn>
@@ -713,6 +715,104 @@ function LandingPage() {
         </div>
       </section>
 
+      {/* ────── Pricing ────── */}
+      <section id="pricing" className="py-20 sm:py-28 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+          <FadeIn>
+            <div className="text-center mb-16">
+              <SectionTag text="Pricing" />
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4">Free While We Build It</h2>
+              <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+                SiteManager is free during early access — no sign-up, no card. The established tools charge by the year; you start at zero.
+              </p>
+            </div>
+          </FadeIn>
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto items-start">
+            {/* SiteManager — highlighted */}
+            <FadeIn delay={0.1}>
+              <div className="relative bg-white border-2 border-amber-400 rounded-2xl p-8 shadow-sm">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap">You are here</span>
+                <h3 className="text-lg font-bold mb-1">SiteManager</h3>
+                <div className="text-4xl font-extrabold mb-1">₹0</div>
+                <p className="text-gray-500 text-sm mb-5">Free · early access</p>
+                <ul className="space-y-2 text-sm text-gray-700">
+                  {['All 7 tools included', 'No sign-up, no card', 'Works on any phone', 'Your data, your server'].map((t) => (
+                    <li key={t} className="flex gap-2"><CheckCircle size={16} className="text-emerald-500 shrink-0 mt-0.5" />{t}</li>
+                  ))}
+                </ul>
+                <Link to="/app" className="mt-6 block text-center bg-gray-900 hover:bg-black text-white px-5 py-2.5 rounded-lg font-medium transition-colors">
+                  Start free
+                </Link>
+              </div>
+            </FadeIn>
+
+            {/* Powerplay */}
+            <FadeIn delay={0.2}>
+              <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+                <h3 className="text-lg font-bold mb-1 text-gray-500">Powerplay</h3>
+                <div className="text-4xl font-extrabold mb-1 text-gray-400">₹71,999<span className="text-base font-medium">/yr</span></div>
+                <p className="text-gray-400 text-sm mb-5">India's #1 — priced for bigger firms</p>
+                <ul className="space-y-2 text-sm text-gray-400">
+                  {['Steep annual commitment', 'English only'].map((t) => (
+                    <li key={t} className="flex gap-2"><XCircle size={16} className="shrink-0 mt-0.5" />{t}</li>
+                  ))}
+                </ul>
+              </div>
+            </FadeIn>
+
+            {/* Onsite */}
+            <FadeIn delay={0.3}>
+              <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+                <h3 className="text-lg font-bold mb-1 text-gray-500">Onsite</h3>
+                <div className="text-4xl font-extrabold mb-1 text-gray-400">₹36,000<span className="text-base font-medium">/yr</span></div>
+                <p className="text-gray-400 text-sm mb-5">3-user minimum to start</p>
+                <ul className="space-y-2 text-sm text-gray-400">
+                  {['Per-user pricing adds up', 'Minimum seats required'].map((t) => (
+                    <li key={t} className="flex gap-2"><XCircle size={16} className="shrink-0 mt-0.5" />{t}</li>
+                  ))}
+                </ul>
+              </div>
+            </FadeIn>
+          </div>
+
+          <p className="text-center text-gray-500 text-xs mt-8 max-w-2xl mx-auto">
+            Competitor prices are public list prices (as of 2026) and may change. Paid plans may arrive later as we add advanced features like GST billing — early users keep early-access perks.
+          </p>
+        </div>
+      </section>
+
+      {/* ────── FAQ ────── */}
+      <section id="faq" className="py-20 sm:py-28 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-100/20 to-transparent" />
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 relative z-10">
+          <FadeIn>
+            <div className="text-center mb-12">
+              <SectionTag text="FAQ" />
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4">Questions, Answered</h2>
+            </div>
+          </FadeIn>
+
+          <div className="space-y-4">
+            {[
+              { q: 'Is it really free?', a: 'Yes — free during early access. No sign-up, no credit card. We may add paid plans later as we build advanced features, but early users keep early-access perks.' },
+              { q: 'Do I need to install an app?', a: 'No. SiteManager runs in any phone browser — nothing to download. Open the link and start.' },
+              { q: 'Does it work offline?', a: 'Not yet — today it needs a connection, but it is lightweight and works on slow 3G/4G. Full offline mode is on our roadmap.' },
+              { q: 'Who can see my data?', a: 'Your data lives in your own PostgreSQL database — we never sell or share it. Role-based login is coming; for now anyone with your app link can access it, so share it carefully.' },
+              { q: 'Can it calculate worker wages?', a: 'Yes. Payroll adds up wages automatically from attendance — present, half-day and overtime — per worker, in ₹.' },
+              { q: 'What languages does it support?', a: 'English today, with Hindi and regional languages coming so on-site supervisors can use it in their own language.' },
+            ].map((item, i) => (
+              <FadeIn key={item.q} delay={i * 0.05}>
+                <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                  <h3 className="font-semibold text-gray-900 mb-1.5">{item.q}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{item.a}</p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ────── CTA ────── */}
       <section className="py-24 sm:py-32 relative">
         <div className="absolute inset-0 overflow-hidden">
@@ -753,8 +853,9 @@ function LandingPage() {
             <span className="font-semibold">SiteManager</span>
           </div>
           <div className="flex items-center gap-6 text-gray-600 text-sm">
-            <a href="#who" className="hover:text-gray-900 transition-colors">Who It's For</a>
             <a href="#features" className="hover:text-gray-900 transition-colors">Features</a>
+            <a href="#pricing" className="hover:text-gray-900 transition-colors">Pricing</a>
+            <a href="#faq" className="hover:text-gray-900 transition-colors">FAQ</a>
             <a href="#security" className="hover:text-gray-900 transition-colors">Security</a>
             <Link to="/app" className="hover:text-gray-900 transition-colors">Open App</Link>
           </div>
