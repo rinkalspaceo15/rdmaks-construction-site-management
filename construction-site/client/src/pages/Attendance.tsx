@@ -6,6 +6,7 @@ import EmptyState from '../components/EmptyState';
 import { getWorkers } from '../services/workerService';
 import { getAttendance, markAttendance } from '../services/attendanceService';
 import { Worker } from '../types';
+import { useTranslation } from '../i18n';
 
 type AttendanceStatus = 'present' | 'absent' | 'half_day';
 
@@ -16,6 +17,7 @@ interface AttendanceEntry {
 
 function Attendance() {
   const { id: siteId } = useParams<{ id: string }>();
+  const { t } = useTranslation();
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [workers, setWorkers] = useState<Worker[]>([]);
   const [attendanceMap, setAttendanceMap] = useState<Record<string, AttendanceEntry>>({});
@@ -119,10 +121,10 @@ function Attendance() {
         className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 mb-4"
       >
         <ArrowLeft className="w-4 h-4" />
-        Back to Site
+        {t('common.backToSite')}
       </Link>
 
-      <PageHeader title="Attendance" />
+      <PageHeader title={t('attendance.title')} />
 
       <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
         <input
@@ -137,7 +139,7 @@ function Attendance() {
             onClick={markAllPresent}
             className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg font-medium transition-colors text-sm"
           >
-            Mark All Present
+            {t('attendance.markAllPresent')}
           </button>
         )}
       </div>
@@ -145,7 +147,7 @@ function Attendance() {
       {workers.length === 0 ? (
         <EmptyState
           icon={<UserCheck className="w-12 h-12" />}
-          message="No workers added yet"
+          message={t('attendance.noWorkers')}
         />
       ) : (
         <>
@@ -169,19 +171,19 @@ function Attendance() {
 
                     <div className="flex items-center gap-2 flex-shrink-0">
                       <StatusButton
-                        label="Present"
+                        label={t('attendance.present')}
                         active={entry.status === 'present'}
                         activeClass="bg-green-600 text-white"
                         onClick={() => updateStatus(worker.id, 'present')}
                       />
                       <StatusButton
-                        label="Absent"
+                        label={t('attendance.absent')}
                         active={entry.status === 'absent'}
                         activeClass="bg-red-500 text-white"
                         onClick={() => updateStatus(worker.id, 'absent')}
                       />
                       <StatusButton
-                        label="Half Day"
+                        label={t('attendance.halfDay')}
                         active={entry.status === 'half_day'}
                         activeClass="bg-yellow-500 text-white"
                         onClick={() => updateStatus(worker.id, 'half_day')}
@@ -192,7 +194,7 @@ function Attendance() {
                   {(entry.status === 'present' || entry.status === 'half_day') && (
                     <div className="flex items-center gap-2 mt-3 pt-3 border-t border-gray-100">
                       <Clock className="w-4 h-4 text-gray-400" />
-                      <label className="text-sm text-gray-600">Overtime hrs:</label>
+                      <label className="text-sm text-gray-600">{t('attendance.overtimeLabel')}</label>
                       <input
                         type="number"
                         min={0}
@@ -216,12 +218,12 @@ function Attendance() {
               disabled={saving}
               className="w-full sm:w-auto bg-amber-600 hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-2.5 rounded-lg font-medium transition-colors"
             >
-              {saving ? 'Saving...' : 'Save Attendance'}
+              {saving ? t('common.saving') : t('attendance.save')}
             </button>
 
             {saveSuccess && (
               <span className="text-sm text-green-600 font-medium">
-                Attendance saved successfully
+                {t('attendance.saved')}
               </span>
             )}
           </div>

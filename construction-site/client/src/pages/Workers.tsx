@@ -6,10 +6,12 @@ import EmptyState from '../components/EmptyState';
 import Modal from '../components/Modal';
 import { getWorkers, createWorker, updateWorker, deleteWorker } from '../services/workerService';
 import { Worker } from '../types';
+import { useTranslation } from '../i18n';
 
 const EMPTY_FORM = { name: '', role: '', phone: '', daily_wage: '' };
 
 function Workers() {
+  const { t } = useTranslation();
   const [workers, setWorkers] = useState<Worker[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
@@ -76,17 +78,17 @@ function Workers() {
   const columns = [
     {
       key: 'name',
-      label: 'Name',
+      label: t('workers.col.name'),
       render: (item: Record<string, unknown>) => {
         const worker = item as unknown as Worker;
         return <span className="font-semibold text-gray-900">{worker.name}</span>;
       },
     },
-    { key: 'role', label: 'Role' },
-    { key: 'phone', label: 'Phone' },
+    { key: 'role', label: t('workers.col.role') },
+    { key: 'phone', label: t('workers.col.phone') },
     {
       key: 'daily_wage',
-      label: 'Daily Wage',
+      label: t('workers.col.dailyWage'),
       render: (item: Record<string, unknown>) => {
         const worker = item as unknown as Worker;
         return (
@@ -106,13 +108,13 @@ function Workers() {
 
   return (
     <div>
-      <PageHeader title="Workers" actionLabel="Add Worker" onAction={openAddModal} />
+      <PageHeader title={t('workers.title')} actionLabel={t('workers.add')} onAction={openAddModal} />
 
       {workers.length === 0 ? (
         <EmptyState
           icon={<Users size={48} />}
-          message="No workers yet"
-          actionLabel="Add Worker"
+          message={t('workers.empty')}
+          actionLabel={t('workers.add')}
           onAction={openAddModal}
         />
       ) : (
@@ -127,14 +129,14 @@ function Workers() {
       <Modal
         isOpen={modalOpen}
         onClose={closeModal}
-        title={editingWorker ? 'Edit Worker' : 'Add Worker'}
+        title={editingWorker ? t('workers.editTitle') : t('workers.addTitle')}
         onSubmit={handleSubmit}
-        submitLabel={editingWorker ? 'Update' : 'Save'}
+        submitLabel={editingWorker ? t('common.update') : t('common.save')}
       >
         <div className="space-y-4">
           <div>
             <label htmlFor="worker-name" className="block text-sm font-medium text-gray-700 mb-1">
-              Name <span className="text-red-500">*</span>
+              {t('workers.form.name')} <span className="text-red-500">*</span>
             </label>
             <input
               id="worker-name"
@@ -143,13 +145,13 @@ function Workers() {
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-              placeholder="Enter worker name"
+              placeholder={t('workers.form.namePlaceholder')}
             />
           </div>
 
           <div>
             <label htmlFor="worker-role" className="block text-sm font-medium text-gray-700 mb-1">
-              Role
+              {t('workers.form.role')}
             </label>
             <input
               id="worker-role"
@@ -157,13 +159,13 @@ function Workers() {
               value={form.role}
               onChange={(e) => setForm({ ...form, role: e.target.value })}
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-              placeholder="e.g. mason, electrician, laborer, plumber"
+              placeholder={t('workers.form.rolePlaceholder')}
             />
           </div>
 
           <div>
             <label htmlFor="worker-phone" className="block text-sm font-medium text-gray-700 mb-1">
-              Phone
+              {t('workers.form.phone')}
             </label>
             <input
               id="worker-phone"
@@ -171,13 +173,13 @@ function Workers() {
               value={form.phone}
               onChange={(e) => setForm({ ...form, phone: e.target.value })}
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-              placeholder="Enter phone number"
+              placeholder={t('workers.form.phonePlaceholder')}
             />
           </div>
 
           <div>
             <label htmlFor="worker-wage" className="block text-sm font-medium text-gray-700 mb-1">
-              Daily Wage (₹)
+              {t('workers.form.dailyWage')}
             </label>
             <input
               id="worker-wage"
@@ -185,7 +187,7 @@ function Workers() {
               value={form.daily_wage}
               onChange={(e) => setForm({ ...form, daily_wage: e.target.value })}
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-              placeholder="e.g. 800"
+              placeholder={t('workers.form.wagePlaceholder')}
             />
           </div>
         </div>

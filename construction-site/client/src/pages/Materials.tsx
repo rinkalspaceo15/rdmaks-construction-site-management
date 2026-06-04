@@ -12,6 +12,7 @@ import {
   deleteMaterial,
 } from '../services/materialService';
 import { Material } from '../types';
+import { useTranslation } from '../i18n';
 
 const formatCurrency = (value: number) =>
   `₹${new Intl.NumberFormat('en-IN').format(value)}`;
@@ -38,6 +39,7 @@ const emptyForm: MaterialForm = {
 
 function Materials() {
   const { id: siteId } = useParams<{ id: string }>();
+  const { t } = useTranslation();
   const [materials, setMaterials] = useState<Material[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
@@ -115,25 +117,25 @@ function Materials() {
   };
 
   const columns = [
-    { key: 'name', label: 'Name' },
-    { key: 'quantity', label: 'Quantity' },
-    { key: 'unit', label: 'Unit' },
+    { key: 'name', label: t('materials.col.name') },
+    { key: 'quantity', label: t('materials.col.quantity') },
+    { key: 'unit', label: t('materials.col.unit') },
     {
       key: 'unit_price',
-      label: 'Unit Price',
+      label: t('materials.col.unitPrice'),
       render: (item: Material) =>
         formatCurrency(Number(item.unit_price)),
     },
     {
       key: 'total',
-      label: 'Total',
+      label: t('materials.col.total'),
       render: (item: Material) =>
         formatCurrency(Number(item.quantity) * Number(item.unit_price)),
     },
     { key: 'vendor', label: 'Vendor' },
     {
       key: 'date',
-      label: 'Date',
+      label: t('materials.col.date'),
       render: (item: Material) =>
         new Date(item.date).toLocaleDateString(),
     },
@@ -159,20 +161,20 @@ function Materials() {
         className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 mb-4 transition-colors"
       >
         <ArrowLeft size={16} />
-        Back to Site
+        {t('common.backToSite')}
       </Link>
 
       <PageHeader
-        title="Materials"
-        actionLabel="Add Material"
+        title={t('materials.title')}
+        actionLabel={t('materials.add')}
         onAction={openAdd}
       />
 
       {materials.length === 0 ? (
         <EmptyState
           icon={<Package size={48} />}
-          message="No materials recorded for this site yet."
-          actionLabel="Add Material"
+          message={t('materials.empty')}
+          actionLabel={t('materials.add')}
           onAction={openAdd}
         />
       ) : (
@@ -186,7 +188,7 @@ function Materials() {
 
           <div className="mt-4 flex justify-end">
             <span className="text-lg font-semibold text-gray-900">
-              Total: {formatCurrency(runningTotal)}
+              {t('materials.total')}: {formatCurrency(runningTotal)}
             </span>
           </div>
         </>
@@ -195,28 +197,28 @@ function Materials() {
       <Modal
         isOpen={modalOpen}
         onClose={closeModal}
-        title={editingMaterial ? 'Edit Material' : 'Add Material'}
+        title={editingMaterial ? t('materials.editTitle') : t('materials.addTitle')}
         onSubmit={handleSubmit}
-        submitLabel={editingMaterial ? 'Update' : 'Save'}
+        submitLabel={editingMaterial ? t('common.update') : t('common.save')}
       >
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Name <span className="text-red-500">*</span>
+              {t('materials.form.name')} <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={form.name}
               onChange={(e) => handleChange('name', e.target.value)}
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none"
-              placeholder="e.g. Cement, Steel Rods"
+              placeholder={t('materials.form.namePlaceholder')}
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Quantity
+                {t('materials.form.quantity')}
               </label>
               <input
                 type="number"
@@ -231,21 +233,21 @@ function Materials() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Unit
+                {t('materials.form.unit')}
               </label>
               <input
                 type="text"
                 value={form.unit}
                 onChange={(e) => handleChange('unit', e.target.value)}
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none"
-                placeholder="bags / kg / pieces / cubic meters"
+                placeholder={t('materials.form.unitPlaceholder')}
               />
             </div>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Unit Price (₹)
+              {t('materials.form.unitPrice')}
             </label>
             <input
               type="number"
@@ -260,20 +262,20 @@ function Materials() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Vendor
+              {t('materials.form.vendor')}
             </label>
             <input
               type="text"
               value={form.vendor}
               onChange={(e) => handleChange('vendor', e.target.value)}
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none"
-              placeholder="Supplier name"
+              placeholder={t('materials.form.vendorPlaceholder')}
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Date
+              {t('materials.form.date')}
             </label>
             <input
               type="date"

@@ -13,6 +13,7 @@ import {
   deleteExpense,
 } from '../services/expenseService';
 import { Expense } from '../types';
+import { useTranslation } from '../i18n';
 
 const CATEGORIES = ['material', 'labor', 'transport', 'misc'] as const;
 
@@ -28,6 +29,7 @@ const formatINR = (value: number) =>
 
 function Expenses() {
   const { id } = useParams<{ id: string }>();
+  const { t } = useTranslation();
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
@@ -117,19 +119,18 @@ function Expenses() {
   const columns = [
     {
       key: 'category',
-      label: 'Category',
-      render: (item: Expense) =>
-        item.category.charAt(0).toUpperCase() + item.category.slice(1),
+      label: t('expenses.col.category'),
+      render: (item: Expense) => t(`expenses.cat.${item.category}`),
     },
-    { key: 'description', label: 'Description' },
+    { key: 'description', label: t('expenses.col.description') },
     {
       key: 'amount',
-      label: 'Amount',
+      label: t('expenses.col.amount'),
       render: (item: Expense) => formatINR(Number(item.amount)),
     },
     {
       key: 'date',
-      label: 'Date',
+      label: t('expenses.col.date'),
       render: (item: Expense) =>
         new Date(item.date).toLocaleDateString('en-IN', {
           day: '2-digit',
@@ -154,17 +155,17 @@ function Expenses() {
         className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 mb-4 transition-colors"
       >
         <ArrowLeft size={16} />
-        Back to Site
+        {t('common.backToSite')}
       </Link>
 
-      <PageHeader title="Expenses" actionLabel="Add Expense" onAction={openAddModal} />
+      <PageHeader title={t('expenses.title')} actionLabel={t('expenses.add')} onAction={openAddModal} />
 
       {/* Category summary cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         {CATEGORIES.map((cat) => (
           <StatCard
             key={cat}
-            label={cat.charAt(0).toUpperCase() + cat.slice(1)}
+            label={t(`expenses.cat.${cat}`)}
             value={formatINR(categoryTotals[cat])}
             icon={<DollarSign className="w-6 h-6" />}
           />
@@ -183,7 +184,7 @@ function Expenses() {
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             }`}
           >
-            {tab === 'all' ? 'All' : tab.charAt(0).toUpperCase() + tab.slice(1)}
+            {tab === 'all' ? t('expenses.filter.all') : t(`expenses.cat.${tab}`)}
           </button>
         ))}
       </div>
@@ -193,10 +194,10 @@ function Expenses() {
           icon={<DollarSign size={48} />}
           message={
             activeFilter === 'all'
-              ? 'No expenses recorded yet'
-              : `No ${activeFilter} expenses recorded yet`
+              ? t('expenses.emptyAll')
+              : t('expenses.emptyCat', { cat: t(`expenses.cat.${activeFilter}`) })
           }
-          actionLabel="Add Expense"
+          actionLabel={t('expenses.add')}
           onAction={openAddModal}
         />
       ) : (
@@ -210,7 +211,7 @@ function Expenses() {
 
           {/* Grand total */}
           <div className="flex items-center justify-end mt-4 px-4">
-            <span className="text-sm font-medium text-gray-500 mr-3">Grand Total:</span>
+            <span className="text-sm font-medium text-gray-500 mr-3">{t('expenses.grandTotal')}</span>
             <span className="text-lg font-bold text-gray-900">{formatINR(grandTotal)}</span>
           </div>
         </>
@@ -219,14 +220,14 @@ function Expenses() {
       <Modal
         isOpen={modalOpen}
         onClose={closeModal}
-        title={editingExpense ? 'Edit Expense' : 'Add Expense'}
+        title={editingExpense ? t('expenses.editTitle') : t('expenses.addTitle')}
         onSubmit={handleSubmit}
-        submitLabel={editingExpense ? 'Update' : 'Save'}
+        submitLabel={editingExpense ? t('common.update') : t('common.save')}
       >
         <div className="space-y-4">
           <div>
             <label htmlFor="expense-category" className="block text-sm font-medium text-gray-700 mb-1">
-              Category <span className="text-red-500">*</span>
+              {t('expenses.form.category')} <span className="text-red-500">*</span>
             </label>
             <select
               id="expense-category"
@@ -239,7 +240,7 @@ function Expenses() {
             >
               {CATEGORIES.map((cat) => (
                 <option key={cat} value={cat}>
-                  {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                  {t(`expenses.cat.${cat}`)}
                 </option>
               ))}
             </select>
@@ -247,7 +248,7 @@ function Expenses() {
 
           <div>
             <label htmlFor="expense-description" className="block text-sm font-medium text-gray-700 mb-1">
-              Description
+              {t('expenses.form.description')}
             </label>
             <textarea
               id="expense-description"
@@ -255,13 +256,13 @@ function Expenses() {
               value={form.description}
               onChange={(e) => setForm({ ...form, description: e.target.value })}
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-              placeholder="Describe the expense"
+              placeholder={t('expenses.form.descPlaceholder')}
             />
           </div>
 
           <div>
             <label htmlFor="expense-amount" className="block text-sm font-medium text-gray-700 mb-1">
-              Amount (₹) <span className="text-red-500">*</span>
+              {t('expenses.form.amount')} <span className="text-red-500">*</span>
             </label>
             <input
               id="expense-amount"
@@ -271,13 +272,13 @@ function Expenses() {
               value={form.amount}
               onChange={(e) => setForm({ ...form, amount: e.target.value })}
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-              placeholder="e.g. 5000"
+              placeholder={t('expenses.form.amountPlaceholder')}
             />
           </div>
 
           <div>
             <label htmlFor="expense-date" className="block text-sm font-medium text-gray-700 mb-1">
-              Date <span className="text-red-500">*</span>
+              {t('expenses.form.date')} <span className="text-red-500">*</span>
             </label>
             <input
               id="expense-date"

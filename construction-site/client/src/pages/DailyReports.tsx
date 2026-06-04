@@ -6,6 +6,7 @@ import EmptyState from '../components/EmptyState';
 import Modal from '../components/Modal';
 import { getReports, createReport, updateReport } from '../services/reportService';
 import { DailyReport } from '../types';
+import { useTranslation } from '../i18n';
 
 const WEATHER_OPTIONS: DailyReport['weather'][] = ['sunny', 'rainy', 'cloudy'];
 
@@ -24,6 +25,7 @@ const INITIAL_FORM = {
 
 function DailyReports() {
   const { id: siteId } = useParams<{ id: string }>();
+  const { t } = useTranslation();
 
   const [reports, setReports] = useState<DailyReport[]>([]);
   const [loading, setLoading] = useState(true);
@@ -129,20 +131,20 @@ function DailyReports() {
         className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 mb-4 transition-colors"
       >
         <ArrowLeft size={16} />
-        Back to Site
+        {t('common.backToSite')}
       </Link>
 
       <PageHeader
-        title="Daily Reports"
-        actionLabel="Create Report"
+        title={t('reports.title')}
+        actionLabel={t('reports.create')}
         onAction={handleOpenCreate}
       />
 
       {reports.length === 0 ? (
         <EmptyState
           icon={<FileText size={48} />}
-          message="No reports yet"
-          actionLabel="Create Report"
+          message={t('reports.empty')}
+          actionLabel={t('reports.create')}
           onAction={handleOpenCreate}
         />
       ) : (
@@ -194,7 +196,7 @@ function DailyReports() {
                     {report.issues && (
                       <div className="mb-3">
                         <span className="text-sm font-medium text-red-600">
-                          Issues:
+                          {t('reports.issues')}
                         </span>
                         <p className="text-sm text-gray-700 whitespace-pre-line mt-1">
                           {report.issues}
@@ -211,7 +213,7 @@ function DailyReports() {
                       className="inline-flex items-center gap-1.5 text-sm text-amber-600 hover:text-amber-700 font-medium transition-colors"
                     >
                       <Pencil size={14} />
-                      Edit
+                      {t('common.edit')}
                     </button>
                   </div>
                 )}
@@ -225,14 +227,14 @@ function DailyReports() {
       <Modal
         isOpen={modalOpen}
         onClose={handleCloseModal}
-        title={editingReport ? 'Edit Report' : 'Create Report'}
+        title={editingReport ? t('reports.editTitle') : t('reports.createTitle')}
         onSubmit={handleSubmit}
-        submitLabel={submitting ? 'Saving...' : 'Save'}
+        submitLabel={submitting ? t('common.saving') : t('common.save')}
       >
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Date <span className="text-red-500">*</span>
+              {t('reports.form.date')} <span className="text-red-500">*</span>
             </label>
             <input
               type="date"
@@ -244,7 +246,7 @@ function DailyReports() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Weather
+              {t('reports.form.weather')}
             </label>
             <select
               value={form.weather}
@@ -258,7 +260,7 @@ function DailyReports() {
             >
               {WEATHER_OPTIONS.map((opt) => (
                 <option key={opt} value={opt}>
-                  {opt.charAt(0).toUpperCase() + opt.slice(1)}
+                  {t(`reports.weather.${opt}`)}
                 </option>
               ))}
             </select>
@@ -266,12 +268,12 @@ function DailyReports() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Summary
+              {t('reports.form.summary')}
             </label>
             <textarea
               value={form.summary}
               onChange={(e) => setForm({ ...form, summary: e.target.value })}
-              placeholder="What work was done today?"
+              placeholder={t('reports.form.summaryPlaceholder')}
               rows={4}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 resize-none"
             />
@@ -279,12 +281,12 @@ function DailyReports() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Issues
+              {t('reports.form.issues')}
             </label>
             <textarea
               value={form.issues}
               onChange={(e) => setForm({ ...form, issues: e.target.value })}
-              placeholder="Any problems or delays?"
+              placeholder={t('reports.form.issuesPlaceholder')}
               rows={3}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 resize-none"
             />
