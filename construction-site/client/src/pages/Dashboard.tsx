@@ -7,8 +7,10 @@ import StatusBadge from '../components/StatusBadge';
 import { getSites } from '../services/siteService';
 import { getWorkers } from '../services/workerService';
 import { Site, Worker } from '../types';
+import { useTranslation } from '../i18n';
 
 function Dashboard() {
+  const { t } = useTranslation();
   const [sites, setSites] = useState<Site[]>([]);
   const [workers, setWorkers] = useState<Worker[]>([]);
   const [loading, setLoading] = useState(true);
@@ -39,36 +41,36 @@ function Dashboard() {
 
   return (
     <div>
-      <PageHeader title="Dashboard" />
+      <PageHeader title={t('dashboard.title')} />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <StatCard
-          label="Total Sites"
+          label={t('dashboard.totalSites')}
           value={totalSites}
           icon={<Building2 className="w-6 h-6" />}
         />
         <StatCard
-          label="Active Sites"
+          label={t('dashboard.activeSites')}
           value={activeSites}
           icon={<CheckCircle className="w-6 h-6" />}
         />
         <StatCard
-          label="On Hold"
+          label={t('dashboard.onHold')}
           value={onHoldSites}
           icon={<PauseCircle className="w-6 h-6" />}
         />
         <StatCard
-          label="Total Workers"
+          label={t('dashboard.totalWorkers')}
           value={totalWorkers}
           icon={<Users className="w-6 h-6" />}
         />
       </div>
 
       <section>
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Sites</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('dashboard.recentSites')}</h2>
 
         {recentSites.length === 0 ? (
-          <p className="text-gray-500">No sites added yet.</p>
+          <p className="text-gray-500">{t('dashboard.noSites')}</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {recentSites.map((site) => (

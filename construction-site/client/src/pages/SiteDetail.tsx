@@ -16,18 +16,20 @@ import StatusBadge from '../components/StatusBadge';
 import Modal from '../components/Modal';
 import { getSite, updateSite, deleteSite } from '../services/siteService';
 import { Site } from '../types';
+import { useTranslation } from '../i18n';
 
 const TABS = [
-  { label: 'Attendance', path: 'attendance', icon: ClipboardList },
-  { label: 'Materials', path: 'materials', icon: Package },
-  { label: 'Expenses', path: 'expenses', icon: DollarSign },
-  { label: 'Reports', path: 'reports', icon: FileText },
-  { label: 'Payroll', path: 'payroll', icon: IndianRupee },
+  { labelKey: 'tabs.attendance', path: 'attendance', icon: ClipboardList },
+  { labelKey: 'tabs.materials', path: 'materials', icon: Package },
+  { labelKey: 'tabs.expenses', path: 'expenses', icon: DollarSign },
+  { labelKey: 'tabs.reports', path: 'reports', icon: FileText },
+  { labelKey: 'tabs.payroll', path: 'payroll', icon: IndianRupee },
 ] as const;
 
 function SiteDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [site, setSite] = useState<Site | null>(null);
   const [loading, setLoading] = useState(true);
@@ -79,9 +81,7 @@ function SiteDetail() {
 
   const handleDelete = async () => {
     if (!id) return;
-    const confirmed = window.confirm(
-      'Are you sure you want to delete this site? This action cannot be undone.'
-    );
+    const confirmed = window.confirm(t('siteDetail.deleteConfirm'));
     if (!confirmed) return;
     try {
       await deleteSite(id);
@@ -102,12 +102,12 @@ function SiteDetail() {
   if (notFound || !site) {
     return (
       <div className="text-center py-16">
-        <p className="text-gray-500 mb-4">Site not found.</p>
+        <p className="text-gray-500 mb-4">{t('siteDetail.notFound')}</p>
         <Link
           to="/sites"
           className="text-amber-600 hover:text-amber-700 font-medium"
         >
-          Back to Sites
+          {t('common.backToSites')}
         </Link>
       </div>
     );
@@ -127,7 +127,7 @@ function SiteDetail() {
         className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 mb-4"
       >
         <ArrowLeft className="w-4 h-4" />
-        Back to Sites
+        {t('common.backToSites')}
       </Link>
 
       {/* Site header */}
@@ -148,7 +148,7 @@ function SiteDetail() {
               </span>
               <span className="inline-flex items-center gap-1.5">
                 <Calendar className="w-4 h-4" />
-                Started {formattedDate}
+                {t('siteDetail.started', { date: formattedDate })}
               </span>
             </div>
           </div>
@@ -160,14 +160,14 @@ function SiteDetail() {
               className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
             >
               <Pencil className="w-4 h-4" />
-              Edit
+              {t('common.edit')}
             </button>
             <button
               onClick={handleDelete}
               className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
             >
               <Trash2 className="w-4 h-4" />
-              Delete
+              {t('common.delete')}
             </button>
           </div>
         </div>
@@ -182,7 +182,7 @@ function SiteDetail() {
             className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-gray-500 hover:text-amber-600 hover:border-b-2 hover:border-amber-600 whitespace-nowrap transition-colors -mb-px"
           >
             <tab.icon className="w-4 h-4" />
-            {tab.label}
+            {t(tab.labelKey)}
           </Link>
         ))}
       </nav>
@@ -191,9 +191,9 @@ function SiteDetail() {
       <Modal
         isOpen={isEditOpen}
         onClose={() => setIsEditOpen(false)}
-        title="Edit Site"
+        title={t('siteDetail.editTitle')}
         onSubmit={handleEditSubmit}
-        submitLabel="Update Site"
+        submitLabel={t('siteDetail.updateSite')}
       >
         <div className="space-y-4">
           <div>
@@ -201,7 +201,7 @@ function SiteDetail() {
               htmlFor="edit-name"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              Site Name
+              {t('sites.form.name')}
             </label>
             <input
               id="edit-name"
@@ -219,7 +219,7 @@ function SiteDetail() {
               htmlFor="edit-address"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              Address
+              {t('sites.form.address')}
             </label>
             <input
               id="edit-address"
@@ -237,7 +237,7 @@ function SiteDetail() {
               htmlFor="edit-status"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              Status
+              {t('sites.form.status')}
             </label>
             <select
               id="edit-status"
@@ -250,9 +250,9 @@ function SiteDetail() {
               }
               className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
             >
-              <option value="active">Active</option>
-              <option value="on_hold">On Hold</option>
-              <option value="completed">Completed</option>
+              <option value="active">{t('status.active')}</option>
+              <option value="on_hold">{t('status.on_hold')}</option>
+              <option value="completed">{t('status.completed')}</option>
             </select>
           </div>
 
@@ -261,7 +261,7 @@ function SiteDetail() {
               htmlFor="edit-start-date"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              Start Date
+              {t('sites.form.startDate')}
             </label>
             <input
               id="edit-start-date"

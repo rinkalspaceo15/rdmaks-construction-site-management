@@ -7,14 +7,15 @@ import EmptyState from '../components/EmptyState';
 import Modal from '../components/Modal';
 import { getSites, createSite } from '../services/siteService';
 import { Site } from '../types';
+import { useTranslation } from '../i18n';
 
 type StatusFilter = 'all' | 'active' | 'on_hold' | 'completed';
 
-const STATUS_TABS: { value: StatusFilter; label: string }[] = [
-  { value: 'all', label: 'All' },
-  { value: 'active', label: 'Active' },
-  { value: 'on_hold', label: 'On Hold' },
-  { value: 'completed', label: 'Completed' },
+const STATUS_TABS: { value: StatusFilter; labelKey: string }[] = [
+  { value: 'all', labelKey: 'sites.filter.all' },
+  { value: 'active', labelKey: 'sites.filter.active' },
+  { value: 'on_hold', labelKey: 'sites.filter.on_hold' },
+  { value: 'completed', labelKey: 'sites.filter.completed' },
 ];
 
 const INITIAL_FORM = {
@@ -26,6 +27,7 @@ const INITIAL_FORM = {
 
 function SitesList() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [sites, setSites] = useState<Site[]>([]);
   const [loading, setLoading] = useState(true);
@@ -110,16 +112,16 @@ function SitesList() {
   return (
     <div>
       <PageHeader
-        title="Sites"
-        actionLabel="Add Site"
+        title={t('sites.title')}
+        actionLabel={t('sites.add')}
         onAction={handleOpenModal}
       />
 
       {sites.length === 0 ? (
         <EmptyState
           icon={<Building2 size={48} />}
-          message="No sites yet"
-          actionLabel="Add Site"
+          message={t('sites.empty')}
+          actionLabel={t('sites.add')}
           onAction={handleOpenModal}
         />
       ) : (
@@ -132,7 +134,7 @@ function SitesList() {
             />
             <input
               type="text"
-              placeholder="Search sites by name..."
+              placeholder={t('sites.search')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
@@ -151,7 +153,7 @@ function SitesList() {
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
-                {tab.label}
+                {t(tab.labelKey)}
               </button>
             ))}
           </div>
@@ -159,7 +161,7 @@ function SitesList() {
           {/* Card grid */}
           {filteredSites.length === 0 ? (
             <p className="text-center text-gray-500 py-12">
-              No sites match your filters.
+              {t('sites.noMatch')}
             </p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -198,32 +200,32 @@ function SitesList() {
       <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        title="Add Site"
+        title={t('sites.modal.addTitle')}
         onSubmit={handleSubmit}
-        submitLabel={submitting ? 'Saving...' : 'Save'}
+        submitLabel={submitting ? t('common.saving') : t('common.save')}
       >
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Site Name <span className="text-red-500">*</span>
+              {t('sites.form.name')} <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
-              placeholder="e.g. Greenfield Residency"
+              placeholder={t('sites.form.namePlaceholder')}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Address
+              {t('sites.form.address')}
             </label>
             <textarea
               value={form.address}
               onChange={(e) => setForm({ ...form, address: e.target.value })}
-              placeholder="Full site address"
+              placeholder={t('sites.form.addressPlaceholder')}
               rows={2}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 resize-none"
             />
@@ -231,7 +233,7 @@ function SitesList() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Status
+              {t('sites.form.status')}
             </label>
             <select
               value={form.status}
@@ -240,15 +242,15 @@ function SitesList() {
               }
               className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 bg-white"
             >
-              <option value="active">Active</option>
-              <option value="on_hold">On Hold</option>
-              <option value="completed">Completed</option>
+              <option value="active">{t('status.active')}</option>
+              <option value="on_hold">{t('status.on_hold')}</option>
+              <option value="completed">{t('status.completed')}</option>
             </select>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Start Date
+              {t('sites.form.startDate')}
             </label>
             <input
               type="date"

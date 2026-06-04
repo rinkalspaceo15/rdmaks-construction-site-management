@@ -1,21 +1,24 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, Building2, Users, HardHat, Menu, X } from 'lucide-react';
+import LanguageSwitcher from './LanguageSwitcher';
+import { useTranslation } from '../i18n';
 
 interface NavItem {
-  label: string;
+  labelKey: string;
   path: string;
   icon: React.ReactNode;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { label: 'Dashboard', path: '/app', icon: <LayoutDashboard size={20} /> },
-  { label: 'Sites', path: '/sites', icon: <Building2 size={20} /> },
-  { label: 'Workers', path: '/workers', icon: <Users size={20} /> },
+  { labelKey: 'nav.dashboard', path: '/app', icon: <LayoutDashboard size={20} /> },
+  { labelKey: 'nav.sites', path: '/sites', icon: <Building2 size={20} /> },
+  { labelKey: 'nav.workers', path: '/workers', icon: <Users size={20} /> },
 ];
 
 function Sidebar() {
   const location = useLocation();
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
   const isActive = (path: string) => {
@@ -37,7 +40,7 @@ function Sidebar() {
           }`}
         >
           {item.icon}
-          {item.label}
+          {t(item.labelKey)}
         </Link>
       ))}
     </nav>
@@ -52,6 +55,9 @@ function Sidebar() {
           <span className="text-xl font-bold tracking-tight">SiteManager</span>
         </div>
         {navLinks}
+        <div className="mt-auto pt-4">
+          <LanguageSwitcher />
+        </div>
       </aside>
 
       {/* Mobile top bar */}
@@ -78,6 +84,9 @@ function Sidebar() {
             aria-hidden="true"
           />
           {navLinks}
+          <div className="mt-6">
+            <LanguageSwitcher />
+          </div>
         </div>
       )}
     </>

@@ -6,6 +6,7 @@ import DataTable from '../components/DataTable';
 import EmptyState from '../components/EmptyState';
 import { getPayroll } from '../services/payrollService';
 import { PayrollRow } from '../types';
+import { useTranslation } from '../i18n';
 
 const formatCurrency = (value: number) =>
   `₹${new Intl.NumberFormat('en-IN', {
@@ -22,6 +23,7 @@ const monthStartISO = () => {
 
 function Payroll() {
   const { id: siteId } = useParams<{ id: string }>();
+  const { t } = useTranslation();
   const [rows, setRows] = useState<PayrollRow[]>([]);
   const [total, setTotal] = useState('0.00');
   const [from, setFrom] = useState(monthStartISO());
@@ -32,7 +34,7 @@ function Payroll() {
   useEffect(() => {
     if (!siteId) return;
     if (from > to) {
-      setError('From date must be on or before To date.');
+      setError(t('payroll.rangeError'));
       return;
     }
     setError('');
@@ -42,24 +44,24 @@ function Payroll() {
         setRows(res.data.rows);
         setTotal(res.data.total);
       })
-      .catch(() => setError('Failed to load payroll.'))
+      .catch(() => setError(t('payroll.loadError')))
       .finally(() => setLoading(false));
   }, [siteId, from, to]);
 
   const columns = [
-    { key: 'name', label: 'Worker' },
-    { key: 'role', label: 'Role' },
-    { key: 'present_days', label: 'Present' },
-    { key: 'half_days', label: 'Half Day' },
-    { key: 'absent_days', label: 'Absent' },
+    { key: 'name', label: t('payroll.worker') },
+    { key: 'role', label: t('payroll.role') },
+    { key: 'present_days', label: t('payroll.present') },
+    { key: 'half_days', label: t('payroll.halfDay') },
+    { key: 'absent_days', label: t('payroll.absent') },
     {
       key: 'overtime_hours',
-      label: 'OT (hrs)',
+      label: t('payroll.ot'),
       render: (r: PayrollRow) => Number(r.overtime_hours).toString(),
     },
     {
       key: 'wage',
-      label: 'Wage',
+      label: t('payroll.wage'),
       render: (r: PayrollRow) => formatCurrency(Number(r.wage)),
     },
   ];
@@ -71,10 +73,10 @@ function Payroll() {
         className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 mb-4 transition-colors"
       >
         <ArrowLeft size={16} />
-        Back to Site
+        {t('common.backToSite')}
       </Link>
 
-      <PageHeader title="Payroll" />
+      <PageHeader title={t('payroll.title')} />
 
       {/* Date range */}
       <div className="flex flex-wrap items-end gap-4 mb-6 bg-white border border-gray-200 rounded-lg p-4">
@@ -83,7 +85,7 @@ function Payroll() {
             htmlFor="payroll-from"
             className="block text-sm font-medium text-gray-700 mb-1"
           >
-            From
+            {t('payroll.from')}
           </label>
           <input
             id="payroll-from"
@@ -99,7 +101,7 @@ function Payroll() {
             htmlFor="payroll-to"
             className="block text-sm font-medium text-gray-700 mb-1"
           >
-            To
+            {t('payroll.to')}
           </label>
           <input
             id="payroll-to"
@@ -121,7 +123,7 @@ function Payroll() {
       ) : rows.length === 0 ? (
         <EmptyState
           icon={<IndianRupee size={48} />}
-          message="No attendance recorded in this date range yet."
+          message={t('payroll.empty')}
         />
       ) : (
         <>
@@ -129,16 +131,13 @@ function Payroll() {
 
           <div className="mt-4 flex justify-end">
             <span className="text-lg font-semibold text-gray-900">
-              Total Wages: {formatCurrency(Number(total))}
+              {t('payroll.total')}: {formatCurrency(Number(total))}
             </span>
           </div>
         </>
       )}
 
-      <p className="text-xs text-gray-500 mt-4">
-        Wages are computed from attendance: present = full daily wage, half-day =
-        ½, absent = 0, overtime = hours × (daily&nbsp;wage ÷ 8).
-      </p>
+      <p className="text-xs text-gray-500 mt-4">{t('payroll.note')}</p>
     </div>
   );
 }
