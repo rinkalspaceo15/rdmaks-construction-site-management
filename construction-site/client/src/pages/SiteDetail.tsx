@@ -8,6 +8,7 @@ import {
   Package,
   DollarSign,
   FileText,
+  IndianRupee,
   Pencil,
   Trash2,
 } from 'lucide-react';
@@ -21,6 +22,7 @@ const TABS = [
   { label: 'Materials', path: 'materials', icon: Package },
   { label: 'Expenses', path: 'expenses', icon: DollarSign },
   { label: 'Reports', path: 'reports', icon: FileText },
+  { label: 'Payroll', path: 'payroll', icon: IndianRupee },
 ] as const;
 
 function SiteDetail() {

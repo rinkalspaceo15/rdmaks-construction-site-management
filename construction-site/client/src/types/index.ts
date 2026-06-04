@@ -54,3 +54,24 @@ export interface DailyReport {
   issues: string;
   created_at: string;
 }
+
+// Payroll is computed server-side from attendance + workers.daily_wage.
+// DECIMAL aggregates (overtime_hours, wage, total) arrive as strings (pg driver);
+// counts arrive as numbers (cast to int server-side).
+export interface PayrollRow {
+  worker_id: string;
+  name: string;
+  role: string;
+  present_days: number;
+  half_days: number;
+  absent_days: number;
+  overtime_hours: string;
+  wage: string;
+}
+
+export interface PayrollSummary {
+  from: string;
+  to: string;
+  rows: PayrollRow[];
+  total: string;
+}

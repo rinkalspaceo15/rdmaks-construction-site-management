@@ -9,6 +9,7 @@ import Attendance from './pages/Attendance';
 import Materials from './pages/Materials';
 import Expenses from './pages/Expenses';
 import DailyReports from './pages/DailyReports';
+import Payroll from './pages/Payroll';
 
 function AppLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -44,6 +45,7 @@ function App() {
         <Route path="/sites/:id/materials" element={<Materials />} />
         <Route path="/sites/:id/expenses" element={<Expenses />} />
         <Route path="/sites/:id/reports" element={<DailyReports />} />
+        <Route path="/sites/:id/payroll" element={<Payroll />} />
       </Routes>
     </AppLayout>
   );
