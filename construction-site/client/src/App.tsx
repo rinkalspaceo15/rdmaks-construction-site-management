@@ -1,5 +1,6 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
+import PageTransition from './components/PageTransition';
 import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
 import SitesList from './pages/SitesList';
@@ -16,7 +17,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
     <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
       <main className="flex-1 p-6 pt-16 md:pt-6 md:ml-64">
-        {children}
+        <PageTransition>{children}</PageTransition>
       </main>
     </div>
   );

@@ -77,7 +77,7 @@ function Dashboard() {
               <Link
                 key={site.id}
                 to={`/sites/${site.id}`}
-                className="block bg-white rounded-lg shadow-sm p-5 hover:shadow-md transition-shadow"
+                className="block bg-white rounded-lg shadow-sm p-5 border border-transparent hover:border-amber-300 hover:shadow-md hover:-translate-y-0.5 transition-all"
               >
                 <div className="flex items-start justify-between mb-2">
                   <h3 className="font-semibold text-gray-900">{site.name}</h3>

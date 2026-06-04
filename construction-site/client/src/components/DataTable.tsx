@@ -40,7 +40,7 @@ function DataTable<T extends object>({
           {data.map((item, rowIndex) => (
             <tr
               key={rowIndex}
-              className={rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
+              className={`${rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-amber-50 transition-colors`}
             >
               {columns.map((col) => (
                 <td key={col.key} className="px-4 py-3 whitespace-nowrap text-gray-700">

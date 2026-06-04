@@ -33,13 +33,15 @@ function Sidebar() {
           key={item.path}
           to={item.path}
           onClick={() => setIsOpen(false)}
-          className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+          className={`group flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
             isActive(item.path)
               ? 'bg-amber-600 text-white'
               : 'text-gray-300 hover:bg-gray-800 hover:text-white'
           }`}
         >
-          {item.icon}
+          <span className="transition-transform duration-200 group-hover:scale-110">
+            {item.icon}
+          </span>
           {t(item.labelKey)}
         </Link>
       ))}
