@@ -30,6 +30,10 @@ import {
   TrendingUp,
 } from 'lucide-react';
 
+/* ─── Icon palette — restrained two-tone system (amber primary, slate secondary) ─── */
+const ICON_AMBER = 'from-amber-500 to-amber-600';
+const ICON_SLATE = 'from-slate-700 to-slate-900';
+
 /* ─── Utility components ─── */
 
 function CountUp({ target }: { target: number }) {
@@ -112,13 +116,13 @@ const FLOATING_ICONS = [
 ];
 
 const FEATURES = [
-  { icon: <ClipboardList size={28} />, title: 'Site Management', desc: 'Create sites, track status (active/hold/done), see everything organized per project.', gradient: 'from-amber-500 to-orange-600' },
-  { icon: <Users size={28} />, title: 'Worker Attendance', desc: 'Mark present/absent/half-day for your whole crew in under a minute. Track overtime too.', gradient: 'from-blue-500 to-cyan-600' },
-  { icon: <Package size={28} />, title: 'Material Tracking', desc: 'Log every delivery — cement, steel, bricks. Quantity, rate, vendor, date. Running total always visible.', gradient: 'from-emerald-500 to-teal-600' },
-  { icon: <DollarSign size={28} />, title: 'Expense Tracking', desc: 'Categorize every rupee — material, labor, transport, misc. Filter by category. See totals instantly.', gradient: 'from-violet-500 to-purple-600' },
-  { icon: <FileText size={28} />, title: 'Daily Reports', desc: 'End-of-day log: weather, work done, issues faced. Your digital site diary — searchable, never lost.', gradient: 'from-rose-500 to-pink-600' },
-  { icon: <BarChart3 size={28} />, title: 'Dashboard Overview', desc: 'One screen: total sites, active workers, on-hold projects. The "how are my sites doing?" answer.', gradient: 'from-amber-500 to-yellow-500' },
-  { icon: <IndianRupee size={28} />, title: 'Payroll', desc: 'Wages calculated automatically from attendance — present, half-day and overtime, totalled per worker in ₹. No more Excel wage sheets.', gradient: 'from-emerald-500 to-green-600' },
+  { icon: <ClipboardList size={28} />, title: 'Site Management', desc: 'Create sites, track status (active/hold/done), see everything organized per project.', gradient: ICON_AMBER },
+  { icon: <Users size={28} />, title: 'Worker Attendance', desc: 'Mark present/absent/half-day for your whole crew in under a minute. Track overtime too.', gradient: ICON_SLATE },
+  { icon: <Package size={28} />, title: 'Material Tracking', desc: 'Log every delivery — cement, steel, bricks. Quantity, rate, vendor, date. Running total always visible.', gradient: ICON_AMBER },
+  { icon: <DollarSign size={28} />, title: 'Expense Tracking', desc: 'Categorize every rupee — material, labor, transport, misc. Filter by category. See totals instantly.', gradient: ICON_SLATE },
+  { icon: <FileText size={28} />, title: 'Daily Reports', desc: 'End-of-day log: weather, work done, issues faced. Your digital site diary — searchable, never lost.', gradient: ICON_AMBER },
+  { icon: <BarChart3 size={28} />, title: 'Dashboard Overview', desc: 'One screen: total sites, active workers, on-hold projects. The "how are my sites doing?" answer.', gradient: ICON_SLATE },
+  { icon: <IndianRupee size={28} />, title: 'Payroll', desc: 'Wages calculated automatically from attendance — present, half-day and overtime, totalled per worker in ₹. No more Excel wage sheets.', gradient: ICON_AMBER },
 ];
 
 const STATS = [
@@ -127,6 +131,26 @@ const STATS = [
   { value: 100, suffix: '%', label: 'Your data, your server' },
   { value: 0, suffix: '', label: '₹ to start — free' },
 ];
+
+// Honest competitor comparison — sourced from public info (2026). true=yes, false=no, string=nuance.
+const COMPARE_COLS = ['SiteManager', 'WhatsApp + Excel', 'Powerplay', 'Onsite'];
+const COMPARE_ROWS: { label: string; vals: (boolean | string)[] }[] = [
+  { label: 'Cost to start', vals: ['₹0', '₹0', '₹71,999/yr', '₹36,000/yr'] },
+  { label: 'No sign-up / no seat minimum', vals: [true, true, false, false] },
+  { label: 'Attendance → wage payroll', vals: [true, false, true, true] },
+  { label: 'Works in any phone browser', vals: [true, true, true, true] },
+  { label: '₹ Indian number format', vals: [true, 'manual', true, true] },
+  { label: 'Central, searchable records', vals: [true, false, true, true] },
+];
+
+function CompareCell({ value, highlight }: { value: boolean | string; highlight: boolean }) {
+  const base = `px-4 py-3 text-center ${highlight ? 'bg-amber-50/70 font-semibold text-gray-900' : 'text-gray-500'}`;
+  let content: React.ReactNode;
+  if (value === true) content = <CheckCircle size={18} className="inline text-emerald-500" />;
+  else if (value === false) content = <XCircle size={18} className="inline text-gray-300" />;
+  else content = value;
+  return <td className={base}>{content}</td>;
+}
 
 /* ─── Page ─── */
 
@@ -148,7 +172,7 @@ function LandingPage() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="bg-gradient-to-br from-amber-400 to-orange-600 p-1.5 rounded-lg">
+            <div className="bg-gradient-to-br from-amber-500 to-amber-600 p-1.5 rounded-lg">
               <HardHat size={22} className="text-white" />
             </div>
             <span className="text-lg font-bold tracking-tight">SiteManager</span>
@@ -156,6 +180,7 @@ function LandingPage() {
           <div className="flex items-center gap-3">
             <a href="#who" className="hidden sm:block text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors px-3 py-2">Who It's For</a>
             <a href="#features" className="hidden sm:block text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors px-3 py-2">Features</a>
+            <a href="#compare" className="hidden md:block text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors px-3 py-2">Compare</a>
             <a href="#pricing" className="hidden sm:block text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors px-3 py-2">Pricing</a>
             <a href="#faq" className="hidden md:block text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors px-3 py-2">FAQ</a>
             <Link to="/app" className="bg-gray-900 hover:bg-black text-white px-5 py-2 rounded-lg font-medium text-sm transition-all shadow-sm">
@@ -208,8 +233,8 @@ function LandingPage() {
           >
             Your whole site, logged in{' '}
             <span className="relative inline-block">
-              <span className="relative z-10 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 bg-clip-text text-transparent">5 minutes a day</span>
-              <motion.span className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-orange-600 rounded-full" initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.8, delay: 1.2 }} style={{ originX: 0 }} />
+              <span className="relative z-10 bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent">5 minutes a day</span>
+              <motion.span className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-amber-600 rounded-full" initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.8, delay: 1.2 }} style={{ originX: 0 }} />
             </span>
             <br />
             <span className="text-gray-600 text-3xl sm:text-4xl md:text-5xl font-semibold">Ditch the WhatsApp chaos. Run your sites like a pro.</span>
@@ -229,7 +254,7 @@ function LandingPage() {
               Start Managing Sites
               <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </Link>
-            <a href="#who" className="text-gray-700 hover:text-gray-900 px-6 py-4 rounded-xl font-medium border border-gray-300 hover:border-gray-400 transition-all hover:bg-amber-100/50">
+            <a href="#who" className="text-gray-700 hover:text-gray-900 px-6 py-4 rounded-xl font-medium border border-gray-300 hover:border-gray-400 transition-all hover:bg-gray-100">
               See Who It's For
             </a>
           </motion.div>
@@ -242,14 +267,14 @@ function LandingPage() {
         </div>
       </motion.section>
 
-      {/* ────── Trust Bar ────── */}
-      <section className="relative z-10 border-y border-gray-200 bg-white/60 backdrop-blur-sm">
+      {/* ────── Trust Bar (white) ────── */}
+      <section className="relative z-10 border-y border-gray-200 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {STATS.map((stat, i) => (
               <FadeIn key={stat.label} delay={i * 0.1}>
                 <div className="text-center">
-                  <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent mb-1">
+                  <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent mb-1">
                     <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                   </div>
                   <div className="text-gray-500 text-sm font-medium">{stat.label}</div>
@@ -260,7 +285,7 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* ────── Who It's For — Two Personas ────── */}
+      {/* ────── Who It's For — Two Personas (gray-50) ────── */}
       <section id="who" className="py-20 sm:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <FadeIn>
@@ -280,7 +305,7 @@ function LandingPage() {
                 <div className="absolute top-0 right-0 w-40 h-40 bg-amber-200/40 rounded-full blur-3xl group-hover:bg-amber-200/60 transition-colors" />
                 <div className="relative z-10">
                   <div className="flex items-center gap-4 mb-6">
-                    <div className="bg-gradient-to-br from-amber-500 to-orange-600 w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-lg">
+                    <div className={`bg-gradient-to-br ${ICON_AMBER} w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-lg`}>
                       <HardHat size={28} />
                     </div>
                     <div>
@@ -317,16 +342,16 @@ function LandingPage() {
 
             {/* Contractor */}
             <FadeIn delay={0.2} direction="left">
-              <motion.div whileHover={{ y: -4 }} className="bg-white border border-gray-200 shadow-sm rounded-2xl p-8 hover:border-blue-300 transition-colors relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-40 h-40 bg-blue-200/40 rounded-full blur-3xl group-hover:bg-blue-200/60 transition-colors" />
+              <motion.div whileHover={{ y: -4 }} className="bg-white border border-gray-200 shadow-sm rounded-2xl p-8 hover:border-slate-300 transition-colors relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-40 h-40 bg-slate-200/40 rounded-full blur-3xl group-hover:bg-slate-300/50 transition-colors" />
                 <div className="relative z-10">
                   <div className="flex items-center gap-4 mb-6">
-                    <div className="bg-gradient-to-br from-blue-500 to-cyan-600 w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-lg">
+                    <div className={`bg-gradient-to-br ${ICON_SLATE} w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-lg`}>
                       <TrendingUp size={28} />
                     </div>
                     <div>
                       <h3 className="text-xl font-bold">Contractor / Builder</h3>
-                      <p className="text-blue-600 text-sm">Managing 3–10 sites</p>
+                      <p className="text-slate-600 text-sm">Managing 3–10 sites</p>
                     </div>
                   </div>
                   <p className="text-gray-600 text-sm mb-5 leading-relaxed">
@@ -341,7 +366,7 @@ function LandingPage() {
                       { icon: <ClipboardList size={16} />, task: 'Read daily reports from each site without calling anyone' },
                     ].map((item) => (
                       <div key={item.task} className="flex items-start gap-3">
-                        <div className="bg-blue-100 p-1.5 rounded-md text-blue-600 mt-0.5 shrink-0">{item.icon}</div>
+                        <div className="bg-slate-100 p-1.5 rounded-md text-slate-700 mt-0.5 shrink-0">{item.icon}</div>
                         <span className="text-gray-700 text-sm">{item.task}</span>
                       </div>
                     ))}
@@ -359,10 +384,9 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* ────── Before vs After ────── */}
-      <section className="py-20 sm:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-100/30 to-transparent" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+      {/* ────── Before vs After (white) ────── */}
+      <section className="py-20 sm:py-28 bg-white border-y border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <FadeIn>
             <div className="text-center mb-16">
               <SectionTag text="Before vs After" />
@@ -425,10 +449,9 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* ────── Features ────── */}
-      <section id="features" className="py-20 sm:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-100/20 to-transparent" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+      {/* ────── Features (gray-50) ────── */}
+      <section id="features" className="py-20 sm:py-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <FadeIn>
             <div className="text-center mb-16">
               <SectionTag text="Features" />
@@ -445,9 +468,8 @@ function LandingPage() {
                   transition={{ type: 'spring', stiffness: 300 }}
                   className="relative group bg-white border border-gray-200 shadow-sm rounded-2xl p-6 hover:border-amber-300 transition-colors overflow-hidden h-full"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-amber-100/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="relative z-10">
-                    <div className={`bg-gradient-to-br ${f.gradient} w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-white shadow-lg`}>
+                    <div className={`bg-gradient-to-br ${f.gradient} w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-white shadow-md`}>
                       {f.icon}
                     </div>
                     <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
@@ -460,8 +482,8 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* ────── How It Works ────── */}
-      <section id="how-it-works" className="py-20 sm:py-28">
+      {/* ────── How It Works (white) ────── */}
+      <section id="how-it-works" className="py-20 sm:py-28 bg-white border-y border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <FadeIn>
             <div className="text-center mb-16">
@@ -481,7 +503,7 @@ function LandingPage() {
               <FadeIn key={s.step} delay={i * 0.15}>
                 <div className="relative">
                   {i < 3 && <div className="hidden md:block absolute top-10 left-full w-full h-px bg-gradient-to-r from-amber-300 to-transparent z-0" />}
-                  <motion.div whileHover={{ y: -4 }} className="relative z-10 bg-white border border-gray-200 shadow-sm rounded-2xl p-6 hover:border-amber-300 transition-colors h-full">
+                  <motion.div whileHover={{ y: -4 }} className="relative z-10 bg-gray-50 border border-gray-200 shadow-sm rounded-2xl p-6 hover:border-amber-300 transition-colors h-full">
                     <div className="flex items-center gap-3 mb-4">
                       <span className="text-amber-300 text-3xl font-black">{s.step}</span>
                       <div className="bg-amber-100 p-2 rounded-lg text-amber-600">{s.icon}</div>
@@ -496,10 +518,9 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* ────── Security & Trust ────── */}
-      <section id="security" className="py-20 sm:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-100/30 to-transparent" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+      {/* ────── Security & Trust (gray-50) ────── */}
+      <section id="security" className="py-20 sm:py-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <FadeIn>
             <div className="text-center mb-16">
               <SectionTag text="Security & Trust" />
@@ -512,49 +533,19 @@ function LandingPage() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {[
-              {
-                icon: <Lock size={24} />,
-                title: 'Secure Database',
-                desc: 'All data stored in PostgreSQL — not in chat messages that anyone can screenshot or forward.',
-                gradient: 'from-emerald-500 to-green-600',
-              },
-              {
-                icon: <Server size={24} />,
-                title: 'Your Data, Your Server',
-                desc: 'Self-hosted — no third-party cloud storing your financial data. You control where it lives.',
-                gradient: 'from-blue-500 to-cyan-600',
-              },
-              {
-                icon: <Shield size={24} />,
-                title: 'No Data Sharing',
-                desc: 'We do not sell, share, or analyze your data. No ads. No tracking. Just your tool.',
-                gradient: 'from-violet-500 to-purple-600',
-              },
-              {
-                icon: <Eye size={24} />,
-                title: 'Controlled Access',
-                desc: 'Only people with the app URL can see your data. Auth layer coming in next release for role-based access.',
-                gradient: 'from-amber-500 to-orange-600',
-              },
-              {
-                icon: <CheckCircle size={24} />,
-                title: 'Input Validation',
-                desc: 'Every form field validated before it hits the database. No garbage data, no SQL injection.',
-                gradient: 'from-rose-500 to-pink-600',
-              },
-              {
-                icon: <Clock size={24} />,
-                title: 'Reliable Storage',
-                desc: 'Data persists in PostgreSQL with UUID keys and foreign key integrity. No accidental data loss.',
-                gradient: 'from-sky-500 to-blue-600',
-              },
+              { icon: <Lock size={24} />, title: 'Secure Database', desc: 'All data stored in PostgreSQL — not in chat messages that anyone can screenshot or forward.' },
+              { icon: <Server size={24} />, title: 'Your Data, Your Server', desc: 'Self-hosted — no third-party cloud storing your financial data. You control where it lives.' },
+              { icon: <Shield size={24} />, title: 'No Data Sharing', desc: 'We do not sell, share, or analyze your data. No ads. No tracking. Just your tool.' },
+              { icon: <Eye size={24} />, title: 'Controlled Access', desc: 'Only people with the app URL can see your data. Auth layer coming in next release for role-based access.' },
+              { icon: <CheckCircle size={24} />, title: 'Input Validation', desc: 'Every form field validated before it hits the database. No garbage data, no SQL injection.' },
+              { icon: <Clock size={24} />, title: 'Reliable Storage', desc: 'Data persists in PostgreSQL with UUID keys and foreign key integrity. No accidental data loss.' },
             ].map((item, i) => (
               <FadeIn key={item.title} delay={i * 0.08}>
                 <motion.div
                   whileHover={{ y: -6 }}
-                  className="bg-white border border-gray-200 shadow-sm rounded-2xl p-6 hover:border-emerald-300 transition-colors group"
+                  className="bg-white border border-gray-200 shadow-sm rounded-2xl p-6 hover:border-slate-300 transition-colors group"
                 >
-                  <div className={`bg-gradient-to-br ${item.gradient} w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-white shadow-lg`}>
+                  <div className={`bg-gradient-to-br ${ICON_SLATE} w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-white shadow-md`}>
                     {item.icon}
                   </div>
                   <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
@@ -566,84 +557,119 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* ────── App Preview Mock ────── */}
-      <section className="py-20 sm:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-100/20 to-transparent" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+      {/* ────── App Preview (white) ────── */}
+      <section className="py-20 sm:py-28 bg-white border-y border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <FadeIn>
             <div className="text-center mb-12">
               <SectionTag text="App Preview" />
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">See It In Action</h2>
+              <p className="text-gray-600 text-lg max-w-2xl mx-auto">Desktop dashboard for the contractor, phone-first screens for the supervisor on-site.</p>
             </div>
           </FadeIn>
 
           <FadeIn delay={0.2}>
-            <motion.div whileHover={{ scale: 1.01 }} className="relative bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2xl shadow-gray-300/50 max-w-4xl mx-auto">
-              <div className="flex items-center gap-2 px-4 py-3 bg-gray-100 border-b border-gray-200">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-red-400" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                  <div className="w-3 h-3 rounded-full bg-green-400" />
-                </div>
-                <div className="flex-1 mx-4">
-                  <div className="bg-gray-200 rounded-md px-3 py-1 text-gray-500 text-xs text-center flex items-center justify-center gap-1.5">
-                    <Lock size={10} /> sitemanager.app/app
+            <div className="relative max-w-4xl mx-auto">
+              {/* Browser frame */}
+              <motion.div whileHover={{ scale: 1.01 }} className="relative bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2xl shadow-gray-300/60">
+                <div className="flex items-center gap-2 px-4 py-3 bg-gray-100 border-b border-gray-200">
+                  <div className="flex gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-red-400" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-400" />
+                    <div className="w-3 h-3 rounded-full bg-green-400" />
+                  </div>
+                  <div className="flex-1 mx-4">
+                    <div className="bg-gray-200 rounded-md px-3 py-1 text-gray-500 text-xs text-center flex items-center justify-center gap-1.5">
+                      <Lock size={10} /> sitemanager.app/app
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="p-6 flex gap-4">
-                <div className="hidden sm:flex flex-col w-16 bg-gray-100 rounded-xl p-2 gap-3 items-center">
-                  <div className="bg-amber-100 p-2 rounded-lg"><HardHat size={16} className="text-amber-600" /></div>
-                  <div className="bg-gray-200/60 p-2 rounded-lg"><BarChart3 size={16} className="text-gray-400" /></div>
-                  <div className="bg-gray-200/60 p-2 rounded-lg"><Building2 size={16} className="text-gray-400" /></div>
-                  <div className="bg-gray-200/60 p-2 rounded-lg"><Users size={16} className="text-gray-400" /></div>
+                <div className="p-6 flex gap-4">
+                  <div className="hidden sm:flex flex-col w-16 bg-gray-100 rounded-xl p-2 gap-3 items-center">
+                    <div className="bg-amber-100 p-2 rounded-lg"><HardHat size={16} className="text-amber-600" /></div>
+                    <div className="bg-gray-200/70 p-2 rounded-lg"><BarChart3 size={16} className="text-gray-400" /></div>
+                    <div className="bg-gray-200/70 p-2 rounded-lg"><Building2 size={16} className="text-gray-400" /></div>
+                    <div className="bg-gray-200/70 p-2 rounded-lg"><Users size={16} className="text-gray-400" /></div>
+                    <div className="bg-gray-200/70 p-2 rounded-lg"><IndianRupee size={16} className="text-gray-400" /></div>
+                  </div>
+
+                  <div className="flex-1 space-y-4 sm:pr-32">
+                    <div className="flex items-center justify-between">
+                      <div className="text-sm font-semibold text-gray-900">Dashboard</div>
+                      <div className="bg-gray-900 text-white text-xs rounded-lg px-3 py-1.5">Add Site</div>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                      {[
+                        { label: 'Total Sites', val: '12' },
+                        { label: 'Active', val: '8' },
+                        { label: 'Workers', val: '47' },
+                        { label: 'This month ₹', val: '8.4L' },
+                      ].map((s) => (
+                        <motion.div key={s.label} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
+                          className="bg-gray-50 border border-gray-200 rounded-xl p-3"
+                        >
+                          <div className="text-xl font-bold text-gray-900">{s.val}</div>
+                          <div className="text-gray-500 text-xs">{s.label}</div>
+                        </motion.div>
+                      ))}
+                    </div>
+
+                    <div className="space-y-2">
+                      {[
+                        { name: 'Sunrise Apartments, Andheri', status: 'Active', cls: 'bg-green-100 text-green-700' },
+                        { name: 'Green Valley Phase 2, Thane', status: 'Active', cls: 'bg-green-100 text-green-700' },
+                        { name: 'Highway Overpass, NH-48', status: 'On Hold', cls: 'bg-yellow-100 text-yellow-700' },
+                      ].map((row) => (
+                        <div key={row.name} className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5">
+                          <span className="text-sm text-gray-700">{row.name}</span>
+                          <span className={`text-xs px-2 py-0.5 rounded-full ${row.cls}`}>{row.status}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
+              </motion.div>
 
-                <div className="flex-1 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="bg-gray-200 rounded-lg h-6 w-32" />
-                    <div className="bg-amber-200 rounded-lg h-6 w-20" />
-                  </div>
-
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    {[
-                      { label: 'Total Sites', val: '12' },
-                      { label: 'Active', val: '8' },
-                      { label: 'Workers', val: '47' },
-                      { label: 'On Hold', val: '2' },
-                    ].map((s) => (
-                      <motion.div key={s.label} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
-                        className="bg-gray-50 border border-gray-200 rounded-xl p-3"
-                      >
-                        <div className="text-xl font-bold text-gray-900">{s.val}</div>
-                        <div className="text-gray-500 text-xs">{s.label}</div>
-                      </motion.div>
-                    ))}
-                  </div>
-
-                  <div className="space-y-2">
-                    {[
-                      { name: 'Sunrise Apartments, Andheri', status: 'Active', cls: 'bg-green-100 text-green-700' },
-                      { name: 'Green Valley Phase 2, Thane', status: 'Active', cls: 'bg-green-100 text-green-700' },
-                      { name: 'Highway Overpass, NH-48', status: 'On Hold', cls: 'bg-yellow-100 text-yellow-700' },
-                    ].map((row) => (
-                      <div key={row.name} className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5">
-                        <span className="text-sm text-gray-700">{row.name}</span>
-                        <span className={`text-xs px-2 py-0.5 rounded-full ${row.cls}`}>{row.status}</span>
-                      </div>
-                    ))}
+              {/* Phone frame (overlaps on lg) */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                className="hidden lg:block absolute -bottom-10 -right-2 w-52 z-20"
+              >
+                <div className="bg-gray-900 rounded-[2.2rem] p-2 shadow-2xl shadow-gray-400/60">
+                  <div className="bg-white rounded-[1.8rem] overflow-hidden">
+                    <div className="bg-gray-900 text-white text-[11px] font-medium text-center py-2">Attendance · Today</div>
+                    <div className="p-3 space-y-2">
+                      {[
+                        { name: 'Ramesh (mason)', state: 'present', cls: 'bg-green-100 text-green-700' },
+                        { name: 'Suresh (laborer)', state: 'present', cls: 'bg-green-100 text-green-700' },
+                        { name: 'Imran (electrician)', state: '½ day', cls: 'bg-amber-100 text-amber-700' },
+                        { name: 'Vijay (plumber)', state: 'absent', cls: 'bg-red-100 text-red-700' },
+                      ].map((w) => (
+                        <div key={w.name} className="flex items-center justify-between">
+                          <span className="text-[11px] text-gray-700 truncate pr-2">{w.name}</span>
+                          <span className={`text-[10px] px-1.5 py-0.5 rounded-full shrink-0 ${w.cls}`}>{w.state}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="px-3 pb-3">
+                      <div className="bg-gray-900 text-white text-[11px] text-center rounded-lg py-2">Save attendance</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </div>
           </FadeIn>
         </div>
       </section>
 
-      {/* ────── A Day on Site — Timeline ────── */}
-      <section className="py-20 sm:py-28 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+      {/* ────── A Day on Site — Timeline (gray-50) ────── */}
+      <section className="py-20 sm:py-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <FadeIn>
             <div className="text-center mb-12">
               <SectionTag text="A Day on Site" />
@@ -680,10 +706,9 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* ────── Built for India ────── */}
-      <section className="py-20 sm:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-100/20 to-transparent" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+      {/* ────── Built for India (white) ────── */}
+      <section className="py-20 sm:py-28 bg-white border-y border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <FadeIn>
             <div className="text-center mb-16">
               <SectionTag text="Made for India" />
@@ -696,14 +721,14 @@ function LandingPage() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: <IndianRupee size={24} />, title: '₹ Indian Formatting', desc: '₹1,50,000 — not ₹150,000. Proper lakhs/crore formatting your accountant expects.', gradient: 'from-emerald-500 to-green-600' },
-              { icon: <Smartphone size={24} />, title: 'Phone-First UI', desc: 'Large tap targets, simple forms, works on ₹8,000 phones with slow data. No laptop needed.', gradient: 'from-sky-500 to-blue-600' },
-              { icon: <Wrench size={24} />, title: 'Real Roles', desc: 'Mason, electrician, laborer, plumber, painter — roles that match your actual crew.', gradient: 'from-amber-500 to-orange-600' },
-              { icon: <Zap size={24} />, title: 'Zero Learning Curve', desc: 'Plain English labels. No jargon. If your supervisor uses WhatsApp, they can use this.', gradient: 'from-violet-500 to-purple-600' },
+              { icon: <IndianRupee size={24} />, title: '₹ Indian Formatting', desc: '₹1,50,000 — not ₹150,000. Proper lakhs/crore formatting your accountant expects.', gradient: ICON_AMBER },
+              { icon: <Smartphone size={24} />, title: 'Phone-First UI', desc: 'Large tap targets, simple forms, works on ₹8,000 phones with slow data. No laptop needed.', gradient: ICON_SLATE },
+              { icon: <Wrench size={24} />, title: 'Real Roles', desc: 'Mason, electrician, laborer, plumber, painter — roles that match your actual crew.', gradient: ICON_AMBER },
+              { icon: <Zap size={24} />, title: 'Zero Learning Curve', desc: 'Plain English labels. No jargon. If your supervisor uses WhatsApp, they can use this.', gradient: ICON_SLATE },
             ].map((item, i) => (
               <FadeIn key={item.title} delay={i * 0.1}>
-                <motion.div whileHover={{ y: -6 }} className="text-center p-6 rounded-2xl bg-white border border-gray-200 shadow-sm hover:border-amber-300 transition-colors">
-                  <div className={`bg-gradient-to-br ${item.gradient} w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 text-white shadow-lg`}>
+                <motion.div whileHover={{ y: -6 }} className="text-center p-6 rounded-2xl bg-gray-50 border border-gray-200 shadow-sm hover:border-amber-300 transition-colors">
+                  <div className={`bg-gradient-to-br ${item.gradient} w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 text-white shadow-md`}>
                     {item.icon}
                   </div>
                   <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
@@ -715,9 +740,57 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* ────── Pricing ────── */}
-      <section id="pricing" className="py-20 sm:py-28 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+      {/* ────── Comparison (gray-50) ────── */}
+      <section id="compare" className="py-20 sm:py-28">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <FadeIn>
+            <div className="text-center mb-12">
+              <SectionTag text="How We Compare" />
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4">Honest, Side by Side</h2>
+              <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+                We won't pretend to out-feature the big tools — but for a small crew, free and simple wins.
+              </p>
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={0.1}>
+            <div className="overflow-x-auto rounded-2xl border border-gray-200 shadow-sm bg-white">
+              <table className="w-full text-sm text-left min-w-[640px]">
+                <thead>
+                  <tr className="border-b border-gray-200">
+                    <th className="px-4 py-4" />
+                    {COMPARE_COLS.map((col, i) => (
+                      <th
+                        key={col}
+                        className={`px-4 py-4 text-center ${i === 0 ? 'bg-amber-50 font-bold text-gray-900 border-x border-amber-200' : 'font-medium text-gray-500'}`}
+                      >
+                        {col}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {COMPARE_ROWS.map((row) => (
+                    <tr key={row.label}>
+                      <td className="px-4 py-3 font-medium text-gray-700 whitespace-nowrap">{row.label}</td>
+                      {row.vals.map((v, i) => (
+                        <CompareCell key={i} value={v} highlight={i === 0} />
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </FadeIn>
+          <p className="text-center text-gray-500 text-xs mt-6 max-w-2xl mx-auto">
+            Competitor details from public sources (2026); prices are list prices and may change. We show where they match us too — no cherry-picking.
+          </p>
+        </div>
+      </section>
+
+      {/* ────── Pricing (white) ────── */}
+      <section id="pricing" className="py-20 sm:py-28 bg-white border-y border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <FadeIn>
             <div className="text-center mb-16">
               <SectionTag text="Pricing" />
@@ -731,7 +804,7 @@ function LandingPage() {
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto items-start">
             {/* SiteManager — highlighted */}
             <FadeIn delay={0.1}>
-              <div className="relative bg-white border-2 border-amber-400 rounded-2xl p-8 shadow-sm">
+              <div className="relative bg-gray-50 border-2 border-amber-400 rounded-2xl p-8 shadow-sm">
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap">You are here</span>
                 <h3 className="text-lg font-bold mb-1">SiteManager</h3>
                 <div className="text-4xl font-extrabold mb-1">₹0</div>
@@ -749,7 +822,7 @@ function LandingPage() {
 
             {/* Powerplay */}
             <FadeIn delay={0.2}>
-              <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+              <div className="bg-gray-50 border border-gray-200 rounded-2xl p-8 shadow-sm">
                 <h3 className="text-lg font-bold mb-1 text-gray-500">Powerplay</h3>
                 <div className="text-4xl font-extrabold mb-1 text-gray-400">₹71,999<span className="text-base font-medium">/yr</span></div>
                 <p className="text-gray-400 text-sm mb-5">India's #1 — priced for bigger firms</p>
@@ -763,7 +836,7 @@ function LandingPage() {
 
             {/* Onsite */}
             <FadeIn delay={0.3}>
-              <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+              <div className="bg-gray-50 border border-gray-200 rounded-2xl p-8 shadow-sm">
                 <h3 className="text-lg font-bold mb-1 text-gray-500">Onsite</h3>
                 <div className="text-4xl font-extrabold mb-1 text-gray-400">₹36,000<span className="text-base font-medium">/yr</span></div>
                 <p className="text-gray-400 text-sm mb-5">3-user minimum to start</p>
@@ -782,10 +855,9 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* ────── FAQ ────── */}
-      <section id="faq" className="py-20 sm:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-100/20 to-transparent" />
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 relative z-10">
+      {/* ────── FAQ (gray-50) ────── */}
+      <section id="faq" className="py-20 sm:py-28">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <FadeIn>
             <div className="text-center mb-12">
               <SectionTag text="FAQ" />
@@ -813,15 +885,15 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* ────── CTA ────── */}
-      <section className="py-24 sm:py-32 relative">
+      {/* ────── CTA (white) ────── */}
+      <section className="py-24 sm:py-32 relative bg-white border-t border-gray-200">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-200/30 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-200/25 rounded-full blur-3xl" />
         </div>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center relative z-10">
           <FadeIn>
-            <motion.div whileHover={{ scale: 1.01 }} className="bg-gradient-to-br from-white to-amber-50 border border-amber-200 rounded-3xl p-10 sm:p-14 shadow-2xl shadow-amber-200/40">
-              <div className="bg-gradient-to-br from-amber-400 to-orange-600 p-3 rounded-2xl w-fit mx-auto mb-6">
+            <motion.div whileHover={{ scale: 1.01 }} className="bg-gradient-to-br from-gray-50 to-amber-50 border border-amber-200 rounded-3xl p-10 sm:p-14 shadow-xl shadow-amber-100/60">
+              <div className={`bg-gradient-to-br ${ICON_AMBER} p-3 rounded-2xl w-fit mx-auto mb-6`}>
                 <HardHat size={32} className="text-white" />
               </div>
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">Ready to Build Smarter?</h2>
@@ -844,19 +916,19 @@ function LandingPage() {
       </section>
 
       {/* ────── Footer ────── */}
-      <footer className="border-t border-gray-200 py-8">
+      <footer className="border-t border-gray-200 py-8 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
-            <div className="bg-gradient-to-br from-amber-400 to-orange-600 p-1 rounded-md">
+            <div className={`bg-gradient-to-br ${ICON_AMBER} p-1 rounded-md`}>
               <HardHat size={16} className="text-white" />
             </div>
             <span className="font-semibold">SiteManager</span>
           </div>
           <div className="flex items-center gap-6 text-gray-600 text-sm">
             <a href="#features" className="hover:text-gray-900 transition-colors">Features</a>
+            <a href="#compare" className="hover:text-gray-900 transition-colors">Compare</a>
             <a href="#pricing" className="hover:text-gray-900 transition-colors">Pricing</a>
             <a href="#faq" className="hover:text-gray-900 transition-colors">FAQ</a>
-            <a href="#security" className="hover:text-gray-900 transition-colors">Security</a>
             <Link to="/app" className="hover:text-gray-900 transition-colors">Open App</Link>
           </div>
           <p className="text-gray-500 text-sm">Built for Indian builders & contractors.</p>
