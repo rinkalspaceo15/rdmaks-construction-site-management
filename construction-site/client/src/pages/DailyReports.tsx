@@ -155,7 +155,7 @@ function DailyReports() {
             return (
               <div
                 key={report.id}
-                className="bg-white border border-gray-200 rounded-xl transition-all hover:border-amber-300"
+                className="bg-white border border-gray-200 rounded-xl transition-all hover:border-amber-300 hover:shadow-md"
               >
                 {/* Collapsed header — always visible */}
                 <button

@@ -159,7 +159,7 @@ function Attendance() {
               return (
                 <div
                   key={worker.id}
-                  className="bg-white rounded-lg shadow-sm p-4"
+                  className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:border-amber-300 transition-colors"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                     <div className="min-w-0">
@@ -244,8 +244,8 @@ function StatusButton({ label, active, activeClass, onClick }: StatusButtonProps
   return (
     <button
       onClick={onClick}
-      className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-        active ? activeClass : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+      className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all active:scale-95 ${
+        active ? `${activeClass} shadow-sm` : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
       }`}
     >
       {label}
