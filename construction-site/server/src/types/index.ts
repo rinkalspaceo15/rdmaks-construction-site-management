@@ -97,3 +97,16 @@ export interface CreateReportInput {
   summary?: string;
   issues?: string;
 }
+
+// Payroll is computed (no table) from attendance + workers.daily_wage.
+// DECIMAL aggregates come back from pg as strings; counts are cast to int.
+export interface PayrollRow {
+  worker_id: string;
+  name: string;
+  role: string;
+  present_days: number;
+  half_days: number;
+  absent_days: number;
+  overtime_hours: string;
+  wage: string;
+}

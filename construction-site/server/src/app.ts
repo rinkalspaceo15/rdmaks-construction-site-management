@@ -10,6 +10,7 @@ import expensesRouter from './routes/expenses';
 import expensesStandaloneRouter from './routes/expensesStandalone';
 import reportsRouter from './routes/reports';
 import reportsStandaloneRouter from './routes/reportsStandalone';
+import payrollRouter from './routes/payroll';
 import { notFoundHandler, errorHandler } from './middleware/errorHandler';
 
 const app = express();
@@ -29,6 +30,7 @@ app.use('/api/sites', attendanceRouter);
 app.use('/api/sites', materialsRouter);
 app.use('/api/sites', expensesRouter);
 app.use('/api/sites', reportsRouter);
+app.use('/api/sites', payrollRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
