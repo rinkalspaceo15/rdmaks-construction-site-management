@@ -594,7 +594,7 @@ function LandingPage() {
                     <div className="bg-gray-200/70 p-2 rounded-lg"><IndianRupee size={16} className="text-gray-400" /></div>
                   </div>
 
-                  <div className="flex-1 space-y-4 sm:pr-32">
+                  <div className="flex-1 space-y-4 lg:pr-32">
                     <div className="flex items-center justify-between">
                       <div className="text-sm font-semibold text-gray-900">Dashboard</div>
                       <div className="bg-gray-900 text-white text-xs rounded-lg px-3 py-1.5">Add Site</div>
@@ -753,6 +753,7 @@ function LandingPage() {
             </div>
           </FadeIn>
 
+          <p className="sm:hidden text-center text-gray-400 text-xs mb-2">Swipe the table sideways to compare →</p>
           <FadeIn delay={0.1}>
             <div className="overflow-x-auto rounded-2xl border border-gray-200 shadow-sm bg-white">
               <table className="w-full text-sm text-left min-w-[640px]">
