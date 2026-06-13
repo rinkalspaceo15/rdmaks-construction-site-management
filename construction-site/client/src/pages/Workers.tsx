@@ -7,6 +7,7 @@ import Modal from '../components/Modal';
 import { getWorkers, createWorker, updateWorker, deleteWorker } from '../services/workerService';
 import { Worker } from '../types';
 import { useTranslation } from '../i18n';
+import { formatINR } from '../utils/format';
 
 const EMPTY_FORM = { name: '', role: '', phone: '', daily_wage: '' };
 
@@ -92,7 +93,7 @@ function Workers() {
       render: (item: Record<string, unknown>) => {
         const worker = item as unknown as Worker;
         return (
-          <span>₹{new Intl.NumberFormat('en-IN').format(Number(worker.daily_wage))}</span>
+          <span>{formatINR(Number(worker.daily_wage))}</span>
         );
       },
     },

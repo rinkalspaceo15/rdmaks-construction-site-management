@@ -13,9 +13,7 @@ import {
 } from '../services/materialService';
 import { Material } from '../types';
 import { useTranslation } from '../i18n';
-
-const formatCurrency = (value: number) =>
-  `₹${new Intl.NumberFormat('en-IN').format(value)}`;
+import { formatINR } from '../utils/format';
 
 const todayISO = () => new Date().toISOString().split('T')[0];
 
@@ -124,13 +122,13 @@ function Materials() {
       key: 'unit_price',
       label: t('materials.col.unitPrice'),
       render: (item: Material) =>
-        formatCurrency(Number(item.unit_price)),
+        formatINR(Number(item.unit_price)),
     },
     {
       key: 'total',
       label: t('materials.col.total'),
       render: (item: Material) =>
-        formatCurrency(Number(item.quantity) * Number(item.unit_price)),
+        formatINR(Number(item.quantity) * Number(item.unit_price)),
     },
     { key: 'vendor', label: 'Vendor' },
     {
@@ -188,7 +186,7 @@ function Materials() {
 
           <div className="mt-4 flex justify-end">
             <span className="text-lg font-semibold text-gray-900">
-              {t('materials.total')}: {formatCurrency(runningTotal)}
+              {t('materials.total')}: {formatINR(runningTotal)}
             </span>
           </div>
         </>

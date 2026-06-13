@@ -14,6 +14,7 @@ import {
 } from '../services/expenseService';
 import { Expense } from '../types';
 import { useTranslation } from '../i18n';
+import { formatINR } from '../utils/format';
 
 const CATEGORIES = ['material', 'labor', 'transport', 'misc'] as const;
 
@@ -23,9 +24,6 @@ const EMPTY_FORM = {
   amount: '',
   date: new Date().toISOString().slice(0, 10),
 };
-
-const formatINR = (value: number) =>
-  `₹${new Intl.NumberFormat('en-IN').format(value)}`;
 
 function Expenses() {
   const { id } = useParams<{ id: string }>();
