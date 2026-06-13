@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import * as sitesModel from '../models/sites';
 
+const ALLOWED_STATUSES = ['active', 'completed', 'on_hold'] as const;
+
 const router = Router();
 
 // GET /api/sites
@@ -32,6 +34,11 @@ router.post('/', async (req, res, next) => {
     const { name, address, status, start_date } = req.body;
     if (!name) {
       return res.status(400).json({ error: 'Name is required' });
+    }
+    if (status !== undefined && !ALLOWED_STATUSES.includes(status)) {
+      return res.status(400).json({
+        error: `status must be one of ${ALLOWED_STATUSES.join(', ')}`,
+      });
     }
     const result = await sitesModel.create({ name, address, status, start_date });
     res.status(201).json(result.rows[0]);
