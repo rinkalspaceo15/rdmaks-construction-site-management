@@ -12,7 +12,8 @@ export interface Worker {
   name: string;
   role: string;
   phone: string;
-  daily_wage: number;
+  // DECIMAL — pg driver returns as string; convert with Number() for math
+  daily_wage: string;
   created_at: string;
 }
 
@@ -22,16 +23,19 @@ export interface Attendance {
   worker_id: string;
   date: string;
   status: 'present' | 'absent' | 'half_day';
-  overtime_hours: number;
+  // DECIMAL — pg driver returns as string; convert with Number() for math
+  overtime_hours: string;
 }
 
 export interface Material {
   id: string;
   site_id: string;
   name: string;
-  quantity: number;
+  // DECIMAL — pg driver returns as string; convert with Number() for math
+  quantity: string;
   unit: string;
-  unit_price: number;
+  // DECIMAL — pg driver returns as string; convert with Number() for math
+  unit_price: string;
   vendor: string;
   date: string;
 }
@@ -41,7 +45,8 @@ export interface Expense {
   site_id: string;
   category: 'material' | 'labor' | 'transport' | 'misc';
   description: string;
-  amount: number;
+  // DECIMAL — pg driver returns as string; convert with Number() for math
+  amount: string;
   date: string;
 }
 
