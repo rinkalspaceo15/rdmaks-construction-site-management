@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import * as expensesModel from '../models/expenses';
 
+const ALLOWED_CATEGORIES = ['material', 'labor', 'transport', 'misc'] as const;
+
 const router = Router();
 
 // GET /api/sites/:siteId/expenses
@@ -19,6 +21,11 @@ router.post('/:siteId/expenses', async (req, res, next) => {
     const { category, description, amount, date } = req.body;
     if (!category) {
       return res.status(400).json({ error: 'Category is required' });
+    }
+    if (!ALLOWED_CATEGORIES.includes(category)) {
+      return res.status(400).json({
+        error: `category must be one of ${ALLOWED_CATEGORIES.join(', ')}`,
+      });
     }
     if (amount === undefined || amount === null) {
       return res.status(400).json({ error: 'Amount is required' });

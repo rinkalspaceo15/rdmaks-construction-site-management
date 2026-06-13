@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import * as attendanceModel from '../models/attendance';
 
+const ALLOWED_STATUSES = ['present', 'absent', 'half_day'] as const;
+
 const router = Router();
 
 // GET /api/sites/:siteId/attendance?date=YYYY-MM-DD
@@ -28,6 +30,13 @@ router.post('/:siteId/attendance', async (req, res, next) => {
     }
     if (!records || !Array.isArray(records) || records.length === 0) {
       return res.status(400).json({ error: 'records array is required and must not be empty' });
+    }
+    for (const record of records) {
+      if (record?.status !== undefined && !ALLOWED_STATUSES.includes(record.status)) {
+        return res.status(400).json({
+          error: `status must be one of ${ALLOWED_STATUSES.join(', ')}`,
+        });
+      }
     }
     const results = await attendanceModel.markBulk(siteId, date, records);
     res.status(201).json(results);
