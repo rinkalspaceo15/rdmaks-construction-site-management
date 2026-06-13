@@ -1,0 +1,158 @@
+{
+  "totalGaps": 8,
+  "byDimension": [
+    { "dimension": "backend-endpoints", "count": 1 },
+    { "dimension": "frontend-pages", "count": 4 },
+    { "dimension": "frontend-services", "count": 2 },
+    { "dimension": "frontend-components", "count": 1 },
+    { "dimension": "db-tables", "count": 0 },
+    { "dimension": "cross-package-contracts", "count": 0 }
+  ],
+  "rawGaps": [
+    {
+      "dimension": "backend-endpoints",
+      "summary": "All 24 required REST endpoints from backend.md API Endpoints section are implemented in the code. However, one extra endpoint (GET /api/sites/:siteId/payroll) is present that is not specified in the backend.md documentation.",
+      "gaps": [
+        {
+          "item": "GET /api/sites/:siteId/payroll",
+          "gapType": "extra",
+          "codeLocation": "/Users/sotsys337/LEarning/construction-site/server/src/routes/payroll.ts:7",
+          "specReference": "API Endpoints section of backend.md (no mention of payroll)",
+          "severity": "minor",
+          "description": "The payroll endpoint is implemented and mounted in app.ts but not documented in the backend.md spec. This is an extra feature not in the MVP spec.",
+          "verdict": {
+            "realGap": true,
+            "confidence": "high",
+            "reasoning": "SPEC: /Users/sotsys337/LEarning/docs/backend.md contains an \"API Endpoints\" section (lines 118-174) documenting 24 endpoints across 7 resources (sites, workers, attendance, materials, expenses, reports). Zero mention of payroll or /api/sites/:siteId/payroll. The spec explicitly states what's NOT in MVP (lines 187-193) but does not include payroll in either the endpoint list or the exclusion list.\n\nCODE: /Users/sotsys337/LEarning/construction-site/server/src/routes/payroll.ts line 7 implements GET /:siteId/payroll with query parameters from and to. The router is imported in app.ts:13 and mounted at /api/sites in app.ts:33. A corresponding model file (payroll.ts) implements wage-calculation logic based on attendance, worker daily_wage, and overtime_hours. This endpoint is fully functional and integrated.\n\nVERDICT: The payroll endpoint is extra to the MVP spec. It is implemented in code but not documented in backend.md, and therefore not part of the stated requirements.",
+            "correctedDescription": "GET /api/sites/:siteId/payroll with query parameters from and to is implemented in payroll.ts and mounted in app.ts, but this endpoint is not documented in the backend.md API Endpoints section and therefore not part of the MVP specification."
+          }
+        }
+      ]
+    },
+    {
+      "dimension": "frontend-pages",
+      "summary": "Frontend spec requires 7 pages at specific routes. Code implements 9 pages with mismatched routes: Dashboard is at /app instead of /, a non-spec LandingPage exists at /, and two extra pages (Workers and Payroll) are implemented beyond the spec count.",
+      "gaps": [
+        {
+          "item": "Dashboard page route",
+          "gapType": "mismatch",
+          "codeLocation": "/Users/sotsys337/LEarning/construction-site/client/src/App.tsx:41",
+          "specReference": "frontend.md line 44 'Dashboard — `/`'",
+          "severity": "blocker",
+          "description": "Spec defines Dashboard at path '/' but code routes it to '/app'. This breaks the API contract for the root page.",
+          "verdict": {
+            "realGap": true,
+            "confidence": "high",
+            "reasoning": "Spec explicitly states at frontend.md:44 \"### 1. Dashboard — `/`\" and describes it as \"The landing page.\" Code at App.tsx:41 routes Dashboard to `/app` instead. Root path `/` is routed to LandingPage (App.tsx:28-34). The client/CLAUDE.md routing table (provided in system context) confirms this intentional departure: \"| `/` | LandingPage | No sidebar |\" and \"| `/app` | Dashboard | AppLayout |\". This is a factual route mismatch: spec requires Dashboard at `/`, code implements it at `/app`.",
+            "correctedDescription": "The Dashboard component is routed to /app instead of the spec-required / path. A separate LandingPage component has been inserted at / instead. This deviates from the frontend spec which designates Dashboard as the root landing page."
+          }
+        },
+        {
+          "item": "LandingPage",
+          "gapType": "extra",
+          "codeLocation": "/Users/sotsys337/LEarning/construction-site/client/src/App.tsx:33",
+          "specReference": "frontend.md line 44 (no landing page in spec)",
+          "severity": "blocker",
+          "description": "Spec does not mention a landing page. Root path '/' should render Dashboard per spec, but code intercepts it with LandingPage (App.tsx lines 30-35).",
+          "verdict": {
+            "realGap": true,
+            "confidence": "high",
+            "reasoning": "Spec vs code mismatch confirmed:\n\nSPEC EVIDENCE:\n- /Users/sotsys337/LEarning/docs/frontend.md line 42: \"## Pages (7 total)\"\n- Line 44-53: \"### 1. Dashboard — `/`\" with description \"The landing page. Gives a quick overview of everything.\"\n- The spec defines exactly 7 pages with Dashboard at the root path `/` — no LandingPage mentioned\n\nCODE EVIDENCE:\n- /Users/sotsys337/LEarning/construction-site/client/src/App.tsx lines 30-35: Conditional intercepts `location.pathname === '/'` and returns `<LandingPage />` without AppLayout\n- Line 41: Dashboard is mounted at `/app` instead, not at `/` as spec requires\n\nCONTRADICTION:\nThe spec explicitly designates Dashboard as the landing page at `/`. The code adds a separate LandingPage component that was never mentioned in frontend.md and places it at `/`, blocking the spec-required Dashboard entry point. While client/CLAUDE.md documents this routing structure, that document contradicts the frontend.md spec by introducing an undocumented page type.\n\nThis is an architectural mismatch: the spec requires 7 pages with Dashboard at `/`; the code implements 8 pages (adding LandingPage) with Dashboard demoted to `/app`."
+          }
+        },
+        {
+          "item": "Workers page",
+          "gapType": "extra",
+          "codeLocation": "/Users/sotsys337/LEarning/construction-site/client/src/App.tsx:44",
+          "specReference": "frontend.md 'Pages (7 total)' section lists only 7 pages; Workers not among them",
+          "severity": "minor",
+          "description": "Spec explicitly states 'Pages (7 total)' and lists 7 specific pages (Dashboard, Sites List, Site Detail, Attendance, Materials, Expenses, Daily Reports). Workers page is not listed in the spec, though Sidebar component description mentions 'Workers' link.",
+          "verdict": {
+            "realGap": true,
+            "confidence": "high",
+            "reasoning": "SPEC: /Users/sotsys337/LEarning/docs/frontend.md line 42 explicitly states \"## Pages (7 total)\" and lists exactly 7 pages (Dashboard, Sites List, Site Detail, Attendance, Materials, Expenses, Daily Reports) at lines 44, 55, 65, 78, 91, 101, 112. Workers page is NOT listed among these 7.\n\nCODE: /Users/sotsys337/LEarning/construction-site/client/src/App.tsx line 44 has route `<Route path=\"/workers\" element={<Workers />} />`, importing Workers from line 8: `import Workers from './pages/Workers';`. The Workers.tsx file exists at /Users/sotsys337/LEarning/construction-site/client/src/pages/Workers.tsx and is fully implemented with API calls, forms, and table rendering.\n\nThe code implements a Workers page that the spec does not list in its \"Pages (7 total)\" section, making this a genuine extra page. (Note: spec's Sidebar component description at line 127 mentions \"Workers\" link, creating internal inconsistency, but the explicit page count of 7 does not include it.)",
+            "correctedDescription": "Workers page exists in code at /users/sotsys337/LEarning/construction-site/client/src/pages/Workers.tsx and is routed at /workers (App.tsx:44), but is not listed among the 7 specified pages in the frontend spec's \"Pages (7 total)\" section."
+          }
+        },
+        {
+          "item": "Payroll page",
+          "gapType": "extra",
+          "codeLocation": "/Users/sotsys337/LEarning/construction-site/client/src/App.tsx:49",
+          "specReference": "frontend.md (no mention of payroll anywhere)",
+          "severity": "minor",
+          "description": "Spec does not mention payroll anywhere in frontend.md. Payroll page (/sites/:id/payroll) is implemented but not in the spec requirements.",
+          "verdict": {
+            "realGap": true,
+            "confidence": "high",
+            "reasoning": "Spec vs. Code mismatch confirmed:\n\nSPEC: frontend.md explicitly states \"Pages (7 total)\" at line 42, then lists exactly 7 pages (Dashboard, Sites List, Site Detail, Attendance, Materials, Expenses, Daily Reports). No mention of \"Payroll\" anywhere in frontend.md or backend.md (grep search for \"payroll\" returned zero results in both files).\n\nCODE: \n- App.tsx line 13: imports Payroll from './pages/Payroll'\n- App.tsx line 49: <Route path=\"/sites/:id/payroll\" element={<Payroll />} />\n- /Users/sotsys337/LEarning/construction-site/client/src/pages/Payroll.tsx exists with full implementation\n- /Users/sotsys337/LEarning/construction-site/client/src/services/payrollService.ts exists\n\nThe Payroll page is a fully functional, extra feature not mentioned in the specifications. This is an implementation that goes beyond the stated MVP scope.",
+            "correctedDescription": "Payroll page (/sites/:id/payroll) is implemented in the codebase but not mentioned in the MVP frontend specification. The spec explicitly lists \"7 total\" pages and none of them is Payroll. This is scope creep beyond the MVP requirements defined in frontend.md and backend.md."
+          }
+        }
+      ]
+    },
+    {
+      "dimension": "frontend-services",
+      "summary": "Frontend services layer defines 6 required service files with specific exported functions for each resource (sites, workers, attendance, materials, expenses, reports). Code implements all required functions but includes 2 extra items: getWorker function in workerService.ts and an entire payrollService.ts file, neither of which are mentioned in the spec.",
+      "gaps": [
+        {
+          "item": "workerService.getWorker(id)",
+          "gapType": "extra",
+          "codeLocation": "/Users/sotsys337/LEarning/construction-site/client/src/services/workerService.ts:5",
+          "specReference": "API Integration (Services Layer) section",
+          "severity": "minor",
+          "description": "Spec lists workerService functions as: getWorkers, createWorker, updateWorker, deleteWorker. Code includes an extra getWorker(id) function not mentioned in spec. This appears to be a convenience function for fetching a single worker by ID.",
+          "verdict": {
+            "realGap": true,
+            "confidence": "high",
+            "reasoning": "Frontend spec /Users/sotsys337/LEarning/docs/frontend.md line 142 lists workerService.ts functions as: \"getWorkers, createWorker, updateWorker, deleteWorker\" — no getWorker(id) mentioned. Backend spec /Users/sotsys337/LEarning/docs/backend.md lines 132-139 lists Workers endpoints as GET /api/workers, POST /api/workers, PUT /api/workers/:id, DELETE /api/workers/:id — no GET /api/workers/:id endpoint. Frontend code /Users/sotsys337/LEarning/construction-site/client/src/services/workerService.ts line 5 includes \"export const getWorker = (id: string) => api.get<Worker>(`/workers/${id}`);\". Backend implementation /Users/sotsys337/LEarning/construction-site/server/src/routes/workers.ts has no GET /:id route handler. The getWorker(id) function in the frontend service calls an endpoint that does not exist in the backend spec or backend code.",
+            "correctedDescription": "workerService includes getWorker(id) function (line 5) that is not listed in the frontend spec's API Integration section (which only lists: getWorkers, createWorker, updateWorker, deleteWorker). This function calls GET /api/workers/:id, which is also not in the backend spec's Workers endpoints section and is not implemented in the backend routes."
+          }
+        },
+        {
+          "item": "payrollService.ts",
+          "gapType": "extra",
+          "codeLocation": "/Users/sotsys337/LEarning/construction-site/client/src/services/payrollService.ts",
+          "specReference": "API Integration (Services Layer) section",
+          "severity": "minor",
+          "description": "Spec defines 6 service files (siteService, workerService, attendanceService, materialService, expenseService, reportService). Code includes payrollService.ts with getPayroll(siteId, from, to) function. Payroll is not mentioned anywhere in frontend.md or backend.md spec.",
+          "verdict": {
+            "realGap": true,
+            "confidence": "high",
+            "correctedDescription": "payrollService.ts exists at /Users/sotsys337/LEarning/construction-site/client/src/services/payrollService.ts but is not specified in /Users/sotsys337/LEarning/docs/frontend.md. The spec explicitly lists \"Pages (7 total)\" and enumerates exactly 7 pages (Dashboard, Sites List, Site Detail, Attendance, Materials, Expenses, Daily Reports). Payroll is absent from both the frontend.md and backend.md MVP specs. It is defined as a future feature in docs/roadmap/02-payroll.md (labeled Phase 1, not MVP scope).",
+            "reasoning": "Evidence: (1) /Users/sotsys337/LEarning/docs/frontend.md lines 42-146 define \"## Pages (7 total)\" with exactly 7 pages listed; lines 137-146 define \"## API Integration (Services Layer)\" with exactly 6 service files required (siteService, workerService, attendanceService, materialService, expenseService, reportService). Payroll is not mentioned. (2) /Users/sotsys337/LEarning/docs/backend.md contains zero matches for \"payroll\" (verified by grep). (3) Code contains: /Users/sotsys337/LEarning/construction-site/client/src/services/payrollService.ts (lines 1-5, with getPayroll function) and /Users/sotsys337/LEarning/construction-site/client/src/pages/Payroll.tsx (lines 1-146, full Payroll component). (4) /Users/sotsys337/LEarning/docs/roadmap/02-payroll.md lines 1-48 define payroll as a Phase 1 future feature (\"MVP-safe? ✅ Yes\") separate from the core MVP. The gap is real: code implements a feature not in the active MVP spec."
+          }
+        }
+      ]
+    },
+    {
+      "dimension": "frontend-components",
+      "summary": "All 7 reusable components required by the spec exist and are implemented. Components provide the UI building blocks (Sidebar, PageHeader, DataTable, StatCard, Modal, StatusBadge, EmptyState) as specified. One gap exists: DataTable is described as \"Sortable\" in the spec but lacks sorting implementation in code. Two additional components not in spec (PageTransition, LanguageSwitcher) are present but not problematic.",
+      "gaps": [
+        {
+          "item": "DataTable component",
+          "gapType": "mismatch",
+          "codeLocation": "/Users/sotsys337/LEarning/construction-site/client/src/components/DataTable.tsx:1-82",
+          "specReference": "Reusable Components table - DataTable row: 'Sortable table component'",
+          "severity": "major",
+          "description": "Spec requires DataTable to be 'Sortable table component' but implementation does not include any sorting functionality. No column click handlers, no sort state, no sort indicators (icons/arrows) in header. Implementation provides columns config, data rows, and action buttons per spec, but is missing the sortable requirement.",
+          "verdict": {
+            "realGap": true,
+            "confidence": "high",
+            "reasoning": "The spec at /Users/sotsys337/LEarning/docs/frontend.md line 129 explicitly requires: \"DataTable | Sortable table component. Receives columns config + data rows. Supports action buttons per row.\"\n\nThe implementation at /Users/sotsys337/LEarning/construction-site/client/src/components/DataTable.tsx (lines 1-82) provides:\n- Columns config (Column<T> interface, line 3-7, used in map at lines 29-32)\n- Data rows (data prop, line 11, rendered at lines 40-75)\n- Action buttons per row (onEdit/onDelete props, lines 12-13, rendered at lines 50-72)\n\nBut completely lacks:\n- Sort state (no useState for sortColumn/sortDirection)\n- Header click handlers (headers are static text, line 31)\n- Sort indicators (no sort arrows/icons)\n- Sorting logic\n\nThe \"Sortable\" requirement is explicit in the spec and completely absent from the code. This is a confirmed gap.",
+            "correctedDescription": "DataTable component is missing sorting functionality. Spec requires \"Sortable table component\" but implementation provides only basic table rendering with columns, data rows, and action buttons. No sort state, no clickable headers, no sort indicators."
+          }
+        }
+      ]
+    },
+    {
+      "dimension": "db-tables",
+      "summary": "All six database tables (sites, workers, attendance, materials, expenses, daily_reports) with their complete column definitions, types, constraints, and defaults are correctly implemented in the migration code. The code matches the spec exactly with no gaps, mismatches, or deviations.",
+      "gaps": []
+    },
+    {
+      "dimension": "cross-package-contracts",
+      "summary": "All six contracts between client and server are correctly implemented. API base path uses /api with Vite proxy, DECIMAL fields are typed as strings with Number() conversion, UUIDs are always strings, error responses consistently use {error: string} shape, no authentication is present anywhere, and dates follow ISO 8601 format (YYYY-MM-DD for date columns, full ISO for timestamps).",
+      "gaps": []
+    }
+  ]
+}
